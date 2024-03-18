@@ -6,8 +6,8 @@ import 'package:pill_app/utils/setup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupDatabase();
-  await setup();
+  // await setupDatabase();
+  // await setup();
 
   runApp(const MainApp());
 }
@@ -19,7 +19,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(),
-      child: const HomePage()
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+      )
     );
   }
 }
