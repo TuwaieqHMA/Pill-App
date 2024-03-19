@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future setupDatabase() async{
   
-  await DotEnv().load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(url: dotenv.env["supabaseUrl"]!, anonKey: dotenv.env["supabaseAnonKey"]!);
 }

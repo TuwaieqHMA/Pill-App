@@ -4,6 +4,6 @@ part of 'bottom_nav_bar_bloc.dart';
 sealed class BottomNavBarEvent {}
 
 class ChangeNavEvent extends BottomNavBarEvent {
-  int index; 
+  final int index; 
   ChangeNavEvent({required this.index});
 }

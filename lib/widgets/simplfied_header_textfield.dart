@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -6,12 +7,15 @@ import 'package:pill_app/utils/spaces.dart';
 class SimplfiedHeaderTextField extends StatelessWidget {
   const SimplfiedHeaderTextField({
     super.key,
-    required this.emailController, required this.label, this.isObscured = false,
+    required this.controller, required this.label, this.isObscured = false, this.textDirection, this.inputFormatters, this.maxLength,
   });
 
   final String label;
   final bool? isObscured;
-  final TextEditingController emailController;
+  final TextEditingController controller;
+  final TextDirection? textDirection;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,11 @@ class SimplfiedHeaderTextField extends StatelessWidget {
         Text(label, style: const TextStyle(color: blackColor, fontFamily: tajwalFont, fontSize: 18, fontWeight: FontWeight.bold, ),),
         height8,
         TextField(
+          maxLength: maxLength,
+          inputFormatters: inputFormatters,
+          textDirection: textDirection,
           obscureText: isObscured!,
-          controller: emailController,
+          controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
