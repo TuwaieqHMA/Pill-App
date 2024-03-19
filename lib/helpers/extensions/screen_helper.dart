@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:pill_app/utils/colors.dart';
 
 extension Screen on BuildContext {
-  double getWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
+  double getWidth() {
+    return MediaQuery.of(this).size.width;
   }
 
-  double getHeight(BuildContext context) {
-    return MediaQuery.of(context).size.height;
+  double getHeight() {
+    return MediaQuery.of(this).size.height;
   }
 
-  push(BuildContext context, Widget view, bool isPushOnly) {
-    return Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (route) => view), (Route<dynamic> route) => isPushOnly);
+  push( Widget view, bool isPushOnly) {
+    return Navigator.pushAndRemoveUntil(this, MaterialPageRoute(builder: (route) => view), (Route<dynamic> route) => isPushOnly);
   }
 
-  showSuccessSnackBar(BuildContext context, String msg,) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  pop() {
+    return Navigator.pop(this);
+  }
+
+  showSuccessSnackBar(String msg,) {
+    ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       behavior: SnackBarBehavior.floating,
@@ -29,8 +33,8 @@ extension Screen on BuildContext {
     ));
   }
 
-  showErrorSnackBar(BuildContext context, String msg,) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  showErrorSnackBar(String msg,) {
+    ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       behavior: SnackBarBehavior.floating,

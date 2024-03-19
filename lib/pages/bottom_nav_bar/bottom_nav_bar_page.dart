@@ -106,8 +106,8 @@ class BottomNavBarPage extends StatelessWidget {
                     //  //  spreadRadius: 0.091,
                     // ),]
                     ),
-                    height: context.getWidth(context) * 0.13,
-                    width: context.getHeight(context) * 0.13,
+                    height: context.getWidth() * 0.13,
+                    width: context.getHeight() * 0.13,
                     child: FittedBox(
                       child: FloatingActionButton(
                           backgroundColor: calmGreenColor,
@@ -117,7 +117,7 @@ class BottomNavBarPage extends StatelessWidget {
                             color: whiteColor,
                           ),
                           onPressed: () {
-                            context.push(context, AddMedicationPage(), false);
+                            context.push(const AddMedicationPage(), false);
                             // TODO
                           }),
                     ),

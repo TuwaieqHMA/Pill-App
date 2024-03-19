@@ -8,8 +8,8 @@ class BackIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.getWidth(context) * 0.1,
-      height: context.getWidth(context) * 0.1,
+      width: context.getWidth() * 0.1,
+      height: context.getWidth() * 0.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: glassGreyColor,

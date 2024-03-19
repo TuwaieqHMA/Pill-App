@@ -14,7 +14,7 @@ class PageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.getWidth(context),
+      width: context.getWidth(),
       height: 370,
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 32),
       decoration: const BoxDecoration(

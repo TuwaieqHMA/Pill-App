@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(context), 370),
+          preferredSize: Size(context.getWidth(), 370),
           child: const PageHeader(
             bottomText: 'تسجيل الدخول',
           )),
