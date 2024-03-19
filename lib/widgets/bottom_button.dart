@@ -20,7 +20,7 @@ class BottomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStatePropertyAll(minSize ?? Size(context.getWidth(context), 60)),
+        minimumSize: MaterialStatePropertyAll(minSize ?? Size(context.getWidth(), 60)),
         backgroundColor: MaterialStatePropertyAll(fillColor),
         shape:  MaterialStatePropertyAll(RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(Radius.circular(10)),

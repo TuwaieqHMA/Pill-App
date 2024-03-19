@@ -28,7 +28,7 @@ class StartPage extends StatelessWidget {
             ]),
           )),
       bottomSheet: Container(
-        width: context.getWidth(context),
+        width: context.getWidth(),
         height: 303,
         padding: const EdgeInsets.only(left: 38, right: 38, top: 34),
         decoration: const BoxDecoration(
@@ -41,7 +41,7 @@ class StartPage extends StatelessWidget {
               text: "تسجيل دخول",
               borderSide: BorderSide.none,
               onTap: () {
-                context.push(context, LoginPage(), true);
+                context.push(LoginPage(), true);
               },
             ),
             height28,
