@@ -37,4 +37,16 @@ class DBService {
 
     return userId;
   }
+
+  Future sendOtp({required String email}) async {
+    await supabase.auth.signInWithOtp(email: email);
+  }
+
+  Future verifyOtp({required String email, required String otpToken}) async {
+    await supabase.auth.verifyOTP(token: otpToken, type: OtpType.email, email: email);
+  }
+
+  Future resetPassword({required String newPassword}) async {
+    await supabase.auth.updateUser(UserAttributes(password: newPassword));
+  }
 }

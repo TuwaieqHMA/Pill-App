@@ -24,3 +24,23 @@ final class SignOutEvent extends AuthEvent {}
 final class CheckSessionAvailabilityEvent extends AuthEvent {
   
 }
+
+final class SendOtpEvent extends AuthEvent {
+  final String email;
+
+  SendOtpEvent({required this.email});
+}
+
+final class VerifyOtpEvent extends AuthEvent {
+  final String email;
+
+  final String otpToken;
+  VerifyOtpEvent({required this.email, required this.otpToken});
+}
+
+final class ChangePasswordEvent extends AuthEvent {
+  final String password;
+  final String rePassword;
+
+  ChangePasswordEvent({required this.password, required this.rePassword});
+}

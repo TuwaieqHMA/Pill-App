@@ -13,11 +13,13 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final locator = GetIt.I.get<HomeData>();
   AuthBloc() : super(AuthInitial()) {
-
     on<SignUpEvent>(signUp);
     on<LoginEvent>(login);
     on<SignOutEvent>(signout);
     on<CheckSessionAvailabilityEvent>(checkSessionAvailability);
+    on<SendOtpEvent>(sendOtp);
+    on<VerifyOtpEvent>(verifyOtp);
+    on<ChangePasswordEvent>(changePassword);
   }
 
   FutureOr<void> signUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -78,11 +80,63 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  FutureOr<void> checkSessionAvailability(CheckSessionAvailabilityEvent event, Emitter<AuthState> emit) async{
-      final Session? session = await DBService().getCurrentSession();
-      if(session != null){
-        locator.currentUserId = await DBService().getCurrentUserId();
+  FutureOr<void> checkSessionAvailability(
+      CheckSessionAvailabilityEvent event, Emitter<AuthState> emit) async {
+    final Session? session = await DBService().getCurrentSession();
+    if (session != null) {
+      locator.currentUserId = await DBService().getCurrentUserId();
+    }
+    emit(RedirectUserState(session: session));
+  }
+
+  FutureOr<void> sendOtp(SendOtpEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+
+    if (event.email.trim().isNotEmpty) {
+      try {
+        await DBService().sendOtp(email: event.email);
+        emit(AuthSucessState(msg: "تم إرسال رمز التحقق إلى بريدك الإلكتروني"));
+      } catch (e) {
+        emit(AuthErrorState(msg: "الإيميل غير معروف"));
       }
-      emit(RedirectUserState(session: session));
+    } else {
+      emit(AuthErrorState(msg: "الرجاء تعبئة حقل الإيميل لتغيير كلمة المرور"));
+    }
+  }
+
+  FutureOr<void> verifyOtp(
+      VerifyOtpEvent event, Emitter<AuthState> emit) async {
+    if (event.otpToken.trim().isNotEmpty && event.otpToken.length == 6) {
+      try {
+        await DBService()
+            .verifyOtp(email: event.email, otpToken: event.otpToken);
+        emit(AuthSucessState(
+            msg: "تم التحقق من هويتك يمكنك الآن تغيير كلمة المرور"));
+      } catch (e) {
+        emit(AuthErrorState(msg: "الرمز غير صحيح، يرجى المحاولة مرة اخرى"));
+      }
+    } else {
+      emit(AuthErrorState(msg: "يرجة إدخال الرمز المكون من ست أرقام"));
+    }
+  }
+
+  FutureOr<void> changePassword(
+      ChangePasswordEvent event, Emitter<AuthState> emit) async{
+    emit(AuthLoadingState());
+    if (event.password.trim().isNotEmpty && event.rePassword.isNotEmpty) {
+      if (event.password == event.rePassword) {
+        try {
+          await DBService().resetPassword(newPassword: event.password);
+          emit(AuthSucessState(msg: "تم تغيير كلمة المرور بنجاح"));
+          DBService().signOut();
+        } catch (e) {
+          emit(AuthErrorState(msg: "هناك مشكلة في خدمتنا، الرجاء المحاولة مرة أخرى"));
+        }
+      }else {
+        emit(AuthErrorState(msg: "كلمتا السر غير متطابقتين"));
+      }
+    }else {
+      emit(AuthErrorState(msg: "الرجاء تعبئة جميع الحقول"));
+    }
   }
 }
