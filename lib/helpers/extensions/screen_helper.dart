@@ -44,7 +44,7 @@ extension Screen on BuildContext {
           color: whiteColor,
         ),
       ),
-      backgroundColor: redColor,
+      backgroundColor: calmRedColor,
     ));
   }
 }

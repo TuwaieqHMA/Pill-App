@@ -6,10 +6,14 @@ import 'package:pill_app/widgets/app_logo.dart';
 
 class PageHeader extends StatelessWidget {
   const PageHeader({
-    super.key, required this.bottomText,
+    super.key, required this.bottomText, required this.height, this.showLogo = true, required this.canGoBack, this.bottomTextAlignment,
   });
 
   final String bottomText;
+  final double height;
+  final bool? showLogo;
+  final bool canGoBack;
+  final Alignment? bottomTextAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +33,14 @@ class PageHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(onPressed: (){
+                  (canGoBack) ? IconButton(onPressed: (){
                     Navigator.pop(context);
-                  }, icon: const Icon(Icons.arrow_back_ios_new_rounded, color: whiteColor,)),
-                  const Align(
+                  }, icon: const Icon(Icons.arrow_back_ios_new_rounded, color: whiteColor,)) : const SizedBox(),
+                  (showLogo!) ? const Align(
                     alignment: Alignment.center,
-                    child: AppLogo(isSmall: true,)),
+                    child: AppLogo(isSmall: true,)) : const SizedBox(),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: bottomTextAlignment ?? Alignment.bottomRight,
                     child: Text(bottomText, style: const TextStyle(color: whiteColor, fontFamily: tajwalFont, fontSize: 24, fontWeight: FontWeight.bold),))
                 ],
               ),

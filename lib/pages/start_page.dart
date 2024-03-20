@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/login_page.dart';
+import 'package:pill_app/pages/signup_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -41,16 +42,16 @@ class StartPage extends StatelessWidget {
               text: "تسجيل دخول",
               borderSide: BorderSide.none,
               onTap: () {
-                context.push(LoginPage(), true);
+                context.push(LoginPage(canGoBack: true,), true);
               },
             ),
             height28,
              BottomButton(
-                text: "الدخول كزائر",
+                text: "إنشاء حساب",
                 textstyle: const TextStyle(color: blackColor, fontFamily: poppinsFont, fontSize: 20, fontWeight: FontWeight.w900),
                 fillColor: whiteColor,
                 borderSide: const BorderSide(color: deepGreenColor, width: 1),
-                onTap: (){},),
+                onTap: (){context.push(SignupPage(canGoBack: true,), true);},),
                 
           ],
         ),

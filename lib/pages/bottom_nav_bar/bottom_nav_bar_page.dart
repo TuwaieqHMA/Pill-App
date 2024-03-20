@@ -5,11 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/add_medication_page.dart';
-import 'package:pill_app/pages/ask_saed_page.dart';
 import 'package:pill_app/pages/bottom_nav_bar/bloc/bottom_nav_bar_bloc.dart';
-import 'package:pill_app/pages/home_page.dart';
-import 'package:pill_app/pages/my_med_page.dart';
-import 'package:pill_app/pages/scan_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 
@@ -19,6 +15,7 @@ class BottomNavBarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final serviceLocator = GetIt.I.get<HomeData>();
+    final dataLocator = GetIt.I.get<HomeData>();
 
     return BlocProvider(
       create: (context) => BottomNavBarBloc(),
@@ -29,13 +26,7 @@ class BottomNavBarPage extends StatelessWidget {
             return DefaultTabController(
               length: 5,
               child: Scaffold(
-                  body: const TabBarView(children: [
-                    HomePage(),
-                    MyMedPage(),
-                    AddMedicationPage(),
-                    AskSaedPage(),
-                    ScanPage()
-                  ]),
+                  body:  TabBarView(children: dataLocator.pages),
                   bottomNavigationBar: TabBar(
                     labelPadding: const EdgeInsets.symmetric(horizontal:4,),
                       onTap: (value) {
@@ -117,13 +108,12 @@ class BottomNavBarPage extends StatelessWidget {
                             color: whiteColor,
                           ),
                           onPressed: () {
-                            context.push(const AddMedicationPage(), false);
-                            // TODO
+                            context.push(const AddMedicationPage(), true);
                           }),
                     ),
                   ),
                   floatingActionButtonLocation: FloatingActionButtonLocation
-                      .miniCenterDocked //centerDocked,
+                      .miniCenterDocked
                   ),
             );
           },

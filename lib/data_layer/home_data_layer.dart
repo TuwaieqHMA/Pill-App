@@ -16,4 +16,6 @@ class HomeData {
 
   int selectedPage = 0 ;
   
+  String currentUserId = "";
+  String currentUserEmail = "";
 }

@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
-import 'package:pill_app/pages/email_verify_page.dart';
-import 'package:pill_app/pages/signup_page.dart';
+import 'package:pill_app/pages/login_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -16,10 +15,12 @@ import 'package:pill_app/widgets/page_header.dart';
 import 'package:pill_app/widgets/simplfied_header_textfield.dart';
 
 // ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key, required this.canGoBack});
+class SignupPage extends StatelessWidget {
+  SignupPage({super.key, required this.canGoBack});
 
   final bool canGoBack;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -29,11 +30,12 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), 370),
+          preferredSize: Size(context.getWidth(), 110),
           child: PageHeader(
             canGoBack: canGoBack,
-            height: 370,
-            bottomText: 'تسجيل الدخول',
+            showLogo: false,
+            height: 110,
+            bottomText: 'إنشاء الحساب',
           )),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -41,7 +43,7 @@ class LoginPage extends StatelessWidget {
             context.showErrorSnackBar(state.msg);
           }else if(state is AuthSucessState){
             context.showSuccessSnackBar(state.msg);
-            context.push(const BottomNavBarPage(), false);
+            context.push(LoginPage(canGoBack: false,), false);
           }
         },
         builder: (context, state) {
@@ -54,6 +56,20 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SimplfiedHeaderTextField(
+                  textDirection: TextDirection.rtl,
+                  controller: nameController,
+                  label: 'الاسم',
+                ),
+                height24,
+                SimplfiedHeaderTextField(
+                  maxLength: 3,
+                  textDirection: TextDirection.rtl,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: ageController,
+                  label: 'العمر',
+                ),
+                height24,
+                SimplfiedHeaderTextField(
                   controller: emailController,
                   label: 'الإيميل',
                 ),
@@ -63,29 +79,14 @@ class LoginPage extends StatelessWidget {
                   controller: passwordController,
                   label: 'كلمة المرور',
                 ),
-                TextButton(
-                    style: const ButtonStyle(
-                        padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                        overlayColor: MaterialStatePropertyAll(glassGreyColor)),
-                    onPressed: () {
-                      context.push(EmailVerifcationPage(), true);
-                    },
-                    child: const Text(
-                      "هل نسيت كلمة المرور؟",
-                      style: TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: tajwalFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    )),
-                height16,
+                height32,
                 Align(
                     alignment: Alignment.center,
                     child: BottomButton(
                       onTap: (){
-                        bloc.add(LoginEvent(email: emailController.text, password: passwordController.text));
+                        bloc.add(SignUpEvent(age: ageController.text, email: emailController.text, password: passwordController.text, name: nameController.text));
                       },
-                      text: "تسجيل الدخول",
+                      text: "إنشاء الحساب",
                       fillColor: midGreenColor,
                       borderSide: BorderSide.none,
                       minSize: const Size(300, 60),
@@ -96,7 +97,7 @@ class LoginPage extends StatelessWidget {
                   child: RichText(
                       text: TextSpan(children: [
                     const TextSpan(
-                      text: "لا يوجد لديك حساب؟ ",
+                      text: "لديك حساب مسبقاً؟ ",
                       style: TextStyle(
                           color: blackColor,
                           fontFamily: poppinsFont,
@@ -106,9 +107,9 @@ class LoginPage extends StatelessWidget {
                     TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.push(SignupPage(canGoBack: false), false);
+                          context.push(LoginPage(canGoBack: false), false);
                         },
-                      text: "سجل الآن",
+                      text: "تسجيل الدخول",
                       style: const TextStyle(
                           color: deepGreenColor,
                           fontFamily: poppinsFont,

@@ -7,10 +7,11 @@ import 'package:pill_app/pages/login_page.dart';
 import 'package:pill_app/pages/my_med_page.dart';
 import 'package:pill_app/pages/start_page.dart';
 import 'package:pill_app/utils/setup.dart';
+import 'package:pill_app/widgets/redirect_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await setupDatabase();
+  await setupDatabase();
   await setup();
 
   runApp(const MainApp());
@@ -22,11 +23,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => AuthBloc()..add(CheckSessionAvailabilityEvent()),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: 
-        BottomNavBarPage(),
+        home: RedirectWidget(),
         // HomePage(),
       )
     );

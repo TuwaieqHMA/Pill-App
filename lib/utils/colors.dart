@@ -13,4 +13,5 @@ const greyColor1 = Color(0xff504E4E);
 const lightGreyColor = Color(0xffBDBDBD);
 const goldColor = Color(0xffFEBD5B);
 const redColor = Color(0xffFF0000);
+const calmRedColor = Color(0xffBF3131);
 const noColor = Colors.transparent;
