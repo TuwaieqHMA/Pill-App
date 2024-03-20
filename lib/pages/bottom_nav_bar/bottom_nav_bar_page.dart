@@ -108,7 +108,7 @@ class BottomNavBarPage extends StatelessWidget {
                             color: whiteColor,
                           ),
                           onPressed: () {
-                            context.push(const AddMedicationPage(), true);
+                            context.push(AddMedicationPage(), true);
                           }),
                     ),
                   ),

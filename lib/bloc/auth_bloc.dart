@@ -36,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               password: event.password,
               age: int.parse(event.age));
           emit(AuthSucessState(msg: "تم إنشاء الحساب بنجاح"));
+          await DBService().signOut();
         } on AuthException catch (_) {
           emit(AuthErrorState(msg: "الإيميل أو كلمة السر خاطئة"));
         } on Exception catch (_) {

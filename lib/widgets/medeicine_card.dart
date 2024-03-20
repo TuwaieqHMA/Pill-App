@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
+import 'package:pill_app/models/medication_model.dart';
+import 'package:pill_app/pages/edit_medication_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
 
-class MedicineCart extends StatelessWidget {
-  const MedicineCart({super.key, 
-  // this.medicine, 
-  this.formeHome = false});
-  // final model_name? medicine; // ! object from Model
+class MedicineCard extends StatelessWidget {
+  const MedicineCard({super.key, 
+  this.fromHome = false, required this.medication});
+  final Medication medication;
   
-  final bool formeHome;
+  final bool fromHome;
 
   @override
   Widget build(BuildContext context) {
@@ -26,61 +27,60 @@ class MedicineCart extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-            onTap: () {
-              // context.push(EditMedicinePage(), true); //! to be sure from screen page
-            },
-            child: formeHome
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      width16,
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            " تم أخذ الدواء ",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: poppinsFont,
-                                color: greyColor1),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                " ص", //! will be change
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: poppinsFont,
-                                    color: greyColor1),
-                              ),
-                              Text(
-                                " 9:00 ",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: poppinsFont,
-                                    color: greyColor1),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      width8,
-                      Container(
-                        padding: const EdgeInsets.only(top: 15),
-                        width: context.getWidth() * 0.02,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: goldColor),
-                        child: const Text(""),
-                      ),
-                    ],
-                  )
-                : Image.asset("assets/icons/edit.png"),
-          ),
+          fromHome
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    width16,
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          " تم أخذ الدواء ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: poppinsFont,
+                              color: greyColor1),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              " ص", //! will be change
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: poppinsFont,
+                                  color: greyColor1),
+                            ),
+                            Text(
+                              " 9:00 ",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: poppinsFont,
+                                  color: greyColor1),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    width8,
+                    Container(
+                      padding: const EdgeInsets.only(top: 15),
+                      width: context.getWidth() * 0.02,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: goldColor),
+                      child: const Text(""),
+                    ),
+                  ],
+                )
+              : InkWell(
+                onTap: (){
+                  context.push(EditMedicationPage(medication: medication,), true);
+                },
+                child: Image.asset("assets/icons/edit.png")),
           Row(
             children: [
               Column(
@@ -98,7 +98,7 @@ class MedicineCart extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      !formeHome
+                      !fromHome
                           ? Row(
                               children: [
                                 const Text(
