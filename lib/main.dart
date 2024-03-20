@@ -4,6 +4,7 @@ import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
 import 'package:pill_app/pages/home_page.dart';
 import 'package:pill_app/pages/login_page.dart';
+import 'package:pill_app/pages/my_med_page.dart';
 import 'package:pill_app/pages/start_page.dart';
 import 'package:pill_app/utils/setup.dart';
 
@@ -24,7 +25,8 @@ class MainApp extends StatelessWidget {
       create: (context) => AuthBloc(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BottomNavBarPage(),
+        home: 
+        BottomNavBarPage(),
         // HomePage(),
       )
     );

@@ -9,6 +9,7 @@ const calmGreenColor = Color(0xff65B19F);
 const blackColor = Color(0xff0A0909);
 const glassGreyColor = Color(0xffF8F8F6);
 const greyColor = Color(0xff9B9B9B);
+const greyColor1 = Color(0xff504E4E);
 const lightGreyColor = Color(0xffBDBDBD);
 const goldColor = Color(0xffFEBD5B);
 const redColor = Color(0xffFF0000);

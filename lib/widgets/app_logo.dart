@@ -9,6 +9,7 @@ class AppLogo extends StatelessWidget {
   });
 
   final bool? isSmall;
+
   @override
   Widget build(BuildContext context) {
     return Column(
