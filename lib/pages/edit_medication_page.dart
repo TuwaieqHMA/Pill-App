@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
+import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -12,9 +13,9 @@ import 'package:pill_app/widgets/header_icon_textfield.dart';
 import 'package:pill_app/widgets/selection_drop_down_menu.dart';
 
 // ignore: must_be_immutable
-class AddMedicationPage extends StatelessWidget {
-  AddMedicationPage({super.key});
-
+class EditMedicationPage extends StatelessWidget {
+  EditMedicationPage({super.key, required this.medication});
+  final Medication medication;
   TextEditingController medicationNameController = TextEditingController();
   TextEditingController durationController = TextEditingController();
   TextEditingController pillCountController = TextEditingController();
@@ -23,6 +24,11 @@ class AddMedicationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    medicationNameController.text = medication.medicationName;
+    durationController.text = (medication.startDate.difference(medication.endDate).inDays.toString());
+    pillCountController.text = medication.numberPill.toString();
+    timeController.text = "${medication.timeEat.hour}:${medication.timeEat.minute}";
+    beforeAfterController.text = medication.beforeAfterEating;
     final locator = GetIt.I.get<HomeData>();
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -41,7 +47,10 @@ class AddMedicationPage extends StatelessWidget {
           ],
         ),
         body: Theme(
-          data: ThemeData(timePickerTheme: locator.timePickerTheme()),
+          data: ThemeData(
+                  timePickerTheme: locator.timePickerTheme(),
+                  bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.black54)
+                ),
           child: Padding(
             padding: const EdgeInsets.all(28.0),
             child: Column(
@@ -49,7 +58,7 @@ class AddMedicationPage extends StatelessWidget {
               children: [
                 height8,
                 const Text(
-                  "إضافة دواء",
+                  "تعديل الدواء",
                   style: TextStyle(
                       color: blackColor,
                       fontFamily: poppinsFont,
@@ -109,62 +118,81 @@ class AddMedicationPage extends StatelessWidget {
                 ),
                 height16,
                 const Text(
-                  "قبل أو بعد الأكل",
-                  style: TextStyle(
-                      color: blackColor,
-                      fontFamily: poppinsFont,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
+                "قبل أو بعد الأكل",
+                style: TextStyle(
+                    color: blackColor,
+                    fontFamily: poppinsFont,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500),
+              ),
+              height8,
+              SelectionDropDownMenu(
+                controller: beforeAfterController,
+                hintText: "......",
+                itemList: const [
+                  DropdownMenuEntry(value: "قبل الأكل", label: "قبل الأكل"),
+                  DropdownMenuEntry(value: "بعد الأكل", label: "بعد الأكل")
+                ],
+                icon: SvgPicture.asset("assets/icons/calendar.svg"),
+              ),
+              height16,
+                Builder(
+                  builder: (context) {
+                    return HeaderIconTextField(
+                      controller: timeController,
+                      headerText: "وقت الإشعار",
+                      hintText: "اضغط للإختيار...",
+                      prefixIcon: SvgPicture.asset(
+                        "assets/icons/bell.svg",
+                        colorFilter:
+                            const ColorFilter.mode(greyColor, BlendMode.srcIn),
+                      ),
+                      isreadOnly: true,
+                      onTap: () async{
+                        final TimeOfDay? pickedTime = await locator.getTimeOfDay(context);
+                        if (pickedTime != null){
+                          timeController.text = "${pickedTime.hour}:${pickedTime.minute}";
+                        }
+                      },
+                    );
+                  }
                 ),
-                height8,
-                SelectionDropDownMenu(
-                  controller: beforeAfterController,
-                  hintText: "......",
-                  itemList: const [
-                    DropdownMenuEntry(value: "قبل الأكل", label: "قبل الأكل"),
-                    DropdownMenuEntry(value: "بعد الأكل", label: "بعد الأكل")
-                  ],
-                  icon: SvgPicture.asset("assets/icons/calendar.svg"),
-                ),
-                height16,
-                Builder(builder: (context) {
-                  return HeaderIconTextField(
-                    controller: timeController,
-                    headerText: "وقت الإشعار",
-                    hintText: "اضغط للإختيار...",
-                    prefixIcon: SvgPicture.asset(
-                      "assets/icons/bell.svg",
-                      colorFilter:
-                          const ColorFilter.mode(greyColor, BlendMode.srcIn),
-                    ),
-                    isreadOnly: true,
-                    onTap: () async {
-                      final TimeOfDay? pickedTime =
-                          await locator.getTimeOfDay(context);
-                      if (pickedTime != null) {
-                        timeController.text =
-                            "${pickedTime.hour}:${pickedTime.minute}";
-                      }
-                    },
-                  );
-                }),
               ],
             ),
           ),
         ),
         bottomSheet: Padding(
-          padding: const EdgeInsets.only(left: 28, right: 28, bottom: 39),
-          child: BottomButton(
-            onTap: () {},
-            text: "إضافة",
-            fillColor: calmGreenColor,
-            borderSide: BorderSide.none,
-            textstyle: const TextStyle(
-                color: whiteColor,
-                fontFamily: poppinsFont,
-                fontSize: 25,
-                fontWeight: FontWeight.w800),
+          padding: const EdgeInsets.only(left: 28, right: 28, bottom: 29),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BottomButton(
+                onTap: (){},
+                text: "حفظ",
+                fillColor: calmGreenColor,
+                borderSide: BorderSide.none,
+                textstyle: const TextStyle(
+                    color: whiteColor,
+                    fontFamily: poppinsFont,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800),
+              ),
+              height16,
+              BottomButton(
+                onTap: (){},
+                text: "حذف",
+                fillColor: whiteColor,
+                borderSide: const BorderSide(color: calmGreenColor, strokeAlign: BorderSide.strokeAlignInside, width: 1),
+                textstyle: const TextStyle(
+                    color: greyColor1,
+                    fontFamily: poppinsFont,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800),
+              ),
+            ],
           ),
         ));
   }
+
+  
 }

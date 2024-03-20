@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pill_app/models/medication_model.dart';
+import 'package:pill_app/services/database_service.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -39,9 +41,21 @@ class HomePage extends StatelessWidget {
                 child: ListView(
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    children: const [
-                      MedicineCart(formeHome: true ,),
-                      MedicineCart(formeHome: true ,),
+                    children: [
+                      MedicineCard(
+                        fromHome: true,
+                        medication: Medication( //Used as an example to test the UI
+                            medicationName: "الزنك",
+                            timeEat: const TimeOfDay(hour: 10, minute: 30),
+                            beforeAfterEating: "بعد الأكل",
+                            numberPill: 1,
+                            userId: "33ddgrgt",
+                            currentStatus: "تم أخذ الدواء",
+                            startDate: DateTime.now(),
+                            endDate:
+                                DateTime.now().add(const Duration(days: 20))),
+                      ),
+                      // MedicineCard(fromHome: true ,),
                     ]),
               ),
             ),
