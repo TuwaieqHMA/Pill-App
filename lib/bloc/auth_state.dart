@@ -42,6 +42,12 @@ final class AuthEmailVerifiedState extends AuthState {
   AuthEmailVerifiedState({required this.msg});
 }
 
+final class AuthOtpResentState extends AuthState {
+  final String msg;
+
+  AuthOtpResentState({required this.msg});
+}
+
 final class AuthOTPVerifiedState extends AuthState {
   final String msg;
 

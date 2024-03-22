@@ -9,11 +9,11 @@ class DBService {
       required int age,
       required String email,
       required String password}) async {
-    await supabase.auth.signUp(email: email, password: password);
-
+    final signedInUser = await supabase.auth.signUp(email: email, password: password);
+    
     await supabase
         .from("User")
-        .insert(SaedUser(name: name, email: email, password: password, age: age));
+        .insert(SaedUser(id: signedInUser.user!.id,name: name, email: email, password: password, age: age).toJson());
   }
 
   Future login({required String email, required String password}) async {
@@ -49,6 +49,10 @@ class DBService {
 
   Future verifyOtp({required String email, required String otpToken}) async {
     await supabase.auth.verifyOTP(token: otpToken, type: OtpType.email, email: email);
+  }
+
+  Future resendOtp({required String email}) async {
+    await supabase.auth.resend(type: OtpType.magiclink, email: "soqatimohammed@gmail.com");
   }
 
   Future resetPassword({required String newPassword}) async {

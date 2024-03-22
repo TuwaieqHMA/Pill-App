@@ -9,9 +9,8 @@ import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
 import 'package:pill_app/widgets/bottom_button.dart';
 import 'package:pill_app/widgets/page_header.dart';
-import 'package:pill_app/widgets/simplfied_header_textfield.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-
+import 'package:timer_button/timer_button.dart';
 
 // ignore: must_be_immutable
 class OtpVerificationPage extends StatelessWidget {
@@ -22,6 +21,7 @@ class OtpVerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
@@ -44,6 +44,8 @@ class OtpVerificationPage extends StatelessWidget {
               if (state is AuthOTPVerifiedState){
                 context.showSuccessSnackBar(state.msg);
                 context.push(ResetPasswordPage(), true);
+              }else if (state is AuthOtpResentState){
+                context.showSuccessSnackBar(state.msg);
               }
             },
             builder: (context, state) {
@@ -56,8 +58,8 @@ class OtpVerificationPage extends StatelessWidget {
                   height16,
                   Image.asset(
                     "assets/images/otp.png",
-                    height: 350,
-                    width: 350,
+                    height: 300,
+                    width: 300,
                   ),
                   const Text(
                     "تم إرسال الرمز إلى بريدك الإلكتروني، الرجاء إدخال الرمز",
@@ -67,6 +69,20 @@ class OtpVerificationPage extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w600),
                     textAlign: TextAlign.right,
+                  ),
+                  height8,
+                  TimerButton(
+                    onPressed: () {
+                      authBloc.add(ResendOtpEvent(email: email));
+                    },
+                    timeOutInSeconds: 61,
+                    buttonType: ButtonType.textButton,
+                    color: signatureGreencColor2,
+                    activeTextStyle: const TextStyle(color: whiteColor, fontFamily: tajwalFont, fontSize: 14, fontWeight: FontWeight.w500),
+                    disabledColor: greyColor1,
+                    disabledTextStyle: const TextStyle(color: whiteColor, fontFamily: tajwalFont, fontSize: 14, fontWeight: FontWeight.w500),
+                    label: "إعادة إرسال الرمز",
+                    
                   ),
                   height16,
                   OtpTextField(
