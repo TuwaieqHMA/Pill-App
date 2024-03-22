@@ -26,7 +26,9 @@ class MainApp extends StatelessWidget {
       create: (context) => AuthBloc()..add(CheckSessionAvailabilityEvent()),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RedirectWidget(),
+        home:
+        // BottomNavBarPage(),
+        RedirectWidget(),
         // HomePage(),
       )
     );

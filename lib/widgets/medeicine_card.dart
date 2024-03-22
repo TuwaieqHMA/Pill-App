@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
@@ -5,16 +6,34 @@ import 'package:pill_app/pages/edit_medication_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
+import 'package:pill_app/widgets/statuse_card_button.dart';
 
 class MedicineCard extends StatelessWidget {
-  const MedicineCard({super.key, 
-  this.fromHome = false, required this.medication});
+  const MedicineCard(
+      {super.key, this.fromHome = false, required this.medication});
   final Medication medication;
-  
+
   final bool fromHome;
 
   @override
   Widget build(BuildContext context) {
+    final Color color;
+    switch (medication.currentStatus) {
+      case "تم أخذ الجرعة":
+        color = calmGreenColor;
+        break;
+      case "تم التخطي":
+        color = calmRedColor;
+        break;
+      case "أعادة جدولة":
+        color = goldColor;
+        break;
+
+      default:
+        color = Colors.transparent;
+    }
+
+    print(medication.medicationName);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -28,68 +47,98 @@ class MedicineCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           fromHome
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    width16,
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
+              ? medication.currentStatus != "لم يتم"
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          " تم أخذ الدواء ",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: poppinsFont,
-                              color: greyColor1),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              " ص", //! will be change
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: poppinsFont,
-                                  color: greyColor1),
-                            ),
-                            Text(
-                              " 9:00 ",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: poppinsFont,
-                                  color: greyColor1),
-                            ),
-                          ],
+                        width16,
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                medication.currentStatus,
+                                // " تم أخذ الدواء ",
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: poppinsFont,
+                                    color: greyColor1),
+                              ),
+                            ]),
+                        width8,
+                        Container(
+                          padding: const EdgeInsets.only(top: 15),
+                          width: context.getWidth() * 0.02,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: color),
+                          child: const Text(""),
                         ),
                       ],
-                    ),
-                    width8,
-                    Container(
-                      padding: const EdgeInsets.only(top: 15),
-                      width: context.getWidth() * 0.02,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: goldColor),
-                      child: const Text(""),
-                    ),
-                  ],
-                )
+                    )
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        StatusCardButton(
+                          color: redColor,
+                          icon: Icons.cancel_outlined,
+                          onPressed: () {
+                            context.showStatusDialog(
+                              "تاكيد تخطي الدواء", 
+                              "هل أنت متأكد من تخطي هذا الدواء ؟", 
+                              "تخطي",                              
+                              "تم التخطي",
+                              medication, 
+                            );
+
+                          },
+                        ),
+                        width8,
+                        StatusCardButton(
+                          color: goldColor,
+                          icon: Icons.timer_outlined,
+                          onPressed: () {
+                             context.showStatusDialog(
+                              "تاكيد إعادة جدولة الدواء", 
+                              "هل أنت متأكد من رغبتك في أعادة جدولة هذا الدواء ؟", 
+                              "إعادة جدولة",                              
+                              "إعادة جدولة",
+                              medication, 
+                            );
+                          },
+                        ),
+                        width8,
+                        StatusCardButton(
+                          color: calmGreenColor,
+                          icon: Icons.done_outlined,
+                          onPressed: () {
+                            // TODO update status
+                            //! update status convert to bloc
+                          
+                          context.showStatusDialog("تاكيد أخذ الدواء", " هل أنت متأكد من أخذ الجرعة ؟",  "تأكيد", "تم أخذ الجرعة", medication);
+                          },
+                        ),
+                      ],
+                    )
               : InkWell(
-                onTap: (){
-                  context.push(EditMedicationPage(medication: medication,), true);
-                },
-                child: Image.asset("assets/icons/edit.png")),
+                  onTap: () {
+                    context.push(
+                        EditMedicationPage(
+                          medication: medication,
+                        ),
+                        true);
+                  },
+                  child: Image.asset("assets/icons/edit.png")),
           Row(
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
-                    "الزنك", //! will be change
-                    style: TextStyle(
+                  Text(
+                    medication.medicationName,
+
+                    style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                         fontFamily: poppinsFont,
@@ -101,9 +150,11 @@ class MedicineCard extends StatelessWidget {
                       !fromHome
                           ? Row(
                               children: [
-                                const Text(
-                                  " تم ", //! will be change
-                                  style: TextStyle(
+                                Text(
+                                  medication.currentStatus != "لم يتم" ?
+                                  medication.currentStatus :
+                                  medication.beforeAfterEating,
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: poppinsFont,
@@ -120,27 +171,27 @@ class MedicineCard extends StatelessWidget {
                             )
                           : const Text(""),
                       width8,
-                      if (3 < 12) // !set morning or night
-                        const Text(
-                          "ص", //! will be change
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: poppinsFont,
-                              color: greyColor),
-                        ),
-                      if (3 >= 12) // !set morning or night
-                        const Text(
-                          "م", //! will be change
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: poppinsFont,
-                              color: greyColor),
-                        ),
-                      const Text(
-                        " 9:00", //! will be change
-                        style: TextStyle(
+                      12 < 12
+                          ? // set morning or night
+                          const Text(
+                              " ص ", //! will be change
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: poppinsFont,
+                                  color: greyColor),
+                            )
+                          : const Text(
+                              "م ", //! will be change
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: poppinsFont,
+                                  color: greyColor),
+                            ),
+                      Text(
+                        "${medication.timeEat.hour.toString()}:${medication.timeEat.minute.toString()}",
+                        style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                             fontFamily: poppinsFont,
