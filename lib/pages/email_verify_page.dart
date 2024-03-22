@@ -21,10 +21,10 @@ class EmailVerifcationPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), 110),
-          child: const PageHeader(
+          preferredSize: Size(context.getWidth(), context.getHeight() * .14,),
+          child: PageHeader(
             bottomText: "إعادة تعيين كلمة المرور",
-            height: 110,
+            height: context.getHeight() * .14,
             canGoBack: true,
             showLogo: false,
             bottomTextAlignment: Alignment.center,

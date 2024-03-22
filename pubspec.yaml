@@ -20,6 +20,7 @@ dependencies:
   otp_timer_button: ^1.1.1
   timer_button: ^2.1.1
   flutter_native_splash: ^2.4.0
+  simple_barcode_scanner: ^0.1.1
 
 dev_dependencies:
   flutter_test:
