@@ -1,3 +1,4 @@
+import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/models/saed_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -49,4 +50,27 @@ class DBService {
   Future resetPassword({required String newPassword}) async {
     await supabase.auth.updateUser(UserAttributes(password: newPassword));
   }
+
+  Future<List<Medication>> getUserMedications() async {
+    List<Medication> medList = [];
+    final jsonList = await supabase.from("Medication").select().eq("user_id", await getCurrentUserId());
+
+    for (var medication in jsonList) {
+      medList.add(Medication.fromJson(medication));
+    }
+    return medList;
+  }
+
+  Future<void> addMedication(Medication medication) async {
+    await supabase.from("Medication").insert(medication.toJson());
+  }
+
+  Future<void> removeMedication(Medication medication) async {
+    await supabase.from("Medication").delete().eq("id", medication.id!);
+  }
+
+  Future<void> editMedication(Medication newMedication, int medicationId) async {
+    await supabase.from("Medication").update(newMedication.toJson()).eq("id", medicationId);
+  }
+
 }
