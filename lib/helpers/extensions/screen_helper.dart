@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/pages/edit_medication_page.dart';
 import 'package:pill_app/services/database_service.dart';
@@ -57,14 +59,16 @@ extension Screen on BuildContext {
       backgroundColor: calmRedColor,
     ));
   }
+    
 
-  showStatusDialog(
-    String title,
-    String dialogContent,
-    String action1,
-    String textStatus,
-    Medication medication,
-  ) {
+  showStatusDialog({
+    required String title,
+    required String dialogContent,
+    required String action1,
+    required String textStatus,
+    required Medication medication,
+    final onTap,
+  }) {
     showDialog(
       context: this,
       builder: (context) => AlertDialog(
@@ -77,7 +81,7 @@ extension Screen on BuildContext {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              context.pop();
             },
             child: Container(
               padding: const EdgeInsets.all(14),
@@ -93,10 +97,14 @@ extension Screen on BuildContext {
               if(textStatus == "إعادة جدولة")
               {
                 push(EditMedicationPage(medication: medication),  true);
-              }else{
-              DBService().updateCurrentState(
-                  medication: medication, text: textStatus);
-              Navigator.pop(context);}
+              } else {
+                print("preeseee");
+                
+                context.read<MedicationBloc>().add(MedicationStatusUpdateEvent(medication: medication, newStatus: textStatus));
+              // DBService().updateCurrentState(
+              //     medication: medication, newStatus: textStatus);
+              context.pop();
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(14),
