@@ -37,9 +37,7 @@ class EmailVerifcationPage extends StatelessWidget {
           ),
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if(state is AuthErrorState){
-                context.showErrorSnackBar(state.msg);
-              }else if (state is AuthSucessState){
+              if (state is AuthEmailVerifiedState){
                 context.showSuccessSnackBar(state.msg);
                 context.push(OtpVerificationPage(email: emailController.text,), true);
               }
@@ -48,7 +46,6 @@ class EmailVerifcationPage extends StatelessWidget {
               if (state is AuthLoadingState){
                 return const Center(child: CircularProgressIndicator(color: midGreenColor,),);
               }else {
-
               return ListView(
                 shrinkWrap: true,
                 children: [

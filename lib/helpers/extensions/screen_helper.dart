@@ -96,7 +96,7 @@ extension Screen on BuildContext {
             onPressed: () {
               if(textStatus == "إعادة جدولة")
               {
-                push(EditMedicationPage(medication: medication),  true);
+                push(EditMedicationPage(medication: medication, isChangingTime: true,),  true);
               } else {
                 print("preeseee");
                 
@@ -105,7 +105,8 @@ extension Screen on BuildContext {
               //     medication: medication, newStatus: textStatus);
               context.pop();
               }
-            },
+
+            ),
             child: Container(
               padding: const EdgeInsets.all(14),
               child:  Text(

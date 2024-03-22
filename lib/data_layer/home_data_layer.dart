@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pill_app/models/medication_model.dart';
+import 'package:pill_app/models/saed_user.dart';
 import 'package:pill_app/pages/add_medication_page.dart';
 import 'package:pill_app/pages/ask_saed_page.dart';
 import 'package:pill_app/pages/home_page.dart';
@@ -23,6 +24,7 @@ class HomeData {
   String currentUserId = "";
   String currentUserEmail = "";
   List<Medication> userMedicationList = [];
+  SaedUser currentUser = SaedUser(name: "بك", email: "someone@hotmail.com", password: "123456", age: 24);
 
   TimePickerThemeData timePickerTheme() {
     return const TimePickerThemeData(
@@ -49,7 +51,7 @@ class HomeData {
     );
   }
 
-  Future<TimeOfDay?> getTimeOfDay(BuildContext context) async {
+  Future<TimeOfDay?> getTimeOfDay(BuildContext context, TimeOfDay? initialTime) async {
     return await showTimePicker(
         cancelText: "الرجوع",
         confirmText: "إختيار",
@@ -57,7 +59,7 @@ class HomeData {
         hourLabelText: "ساعة",
         helpText: "إختيار الوقت",
         context: context,
-        initialTime: TimeOfDay(
+        initialTime: initialTime ?? TimeOfDay(
             hour: DateTime.now().hour, minute: DateTime.now().minute));
   }
 

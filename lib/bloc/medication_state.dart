@@ -5,10 +5,28 @@ sealed class MedicationState {}
 
 final class MedicationInitial extends MedicationState {}
 
-final class MedicationSucessState extends MedicationState {
+final class MedicationAddedState extends MedicationState {
   final String msg;
 
-  MedicationSucessState({required this.msg});
+  MedicationAddedState({required this.msg});
+}
+
+final class MedicationReadState extends MedicationState {
+  final String msg;
+
+  MedicationReadState({required this.msg});
+}
+
+final class MedicationEditedState extends MedicationState {
+  final String msg;
+
+  MedicationEditedState({required this.msg});
+}
+
+final class MedicationRemovedState extends MedicationState {
+  final String msg;
+
+  MedicationRemovedState({required this.msg});
 }
 
 final class MedicationErrorState extends MedicationState {

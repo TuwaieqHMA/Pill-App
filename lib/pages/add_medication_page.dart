@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
-import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
@@ -54,7 +53,7 @@ class AddMedicationPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is MedicationErrorState) {
                   context.showErrorSnackBar(state.msg);
-                } else if (state is MedicationSucessState) {
+                } else if (state is MedicationAddedState) {
                   context.showSuccessSnackBar(state.msg);
                   context.pop();
                 }
@@ -190,7 +189,7 @@ class AddMedicationPage extends StatelessWidget {
                           isreadOnly: true,
                           onTap: () async {
                             final TimeOfDay? pickedTime =
-                                await locator.getTimeOfDay(context);
+                                await locator.getTimeOfDay(context, null);
                             if (pickedTime != null) {
                               timeController.text =
                                   "${pickedTime.hour}:${pickedTime.minute}";

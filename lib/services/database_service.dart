@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DBService {
   final supabase = Supabase.instance.client;
-
   Future signUp(
       {required String name,
       required int age,
@@ -39,6 +38,11 @@ class DBService {
     return userId;
   }
 
+  Future<SaedUser> getCurrentUserInfo() async {
+    final jsonUser = await supabase.from("User").select().eq("id", await getCurrentUserId()).single();
+    return SaedUser.fromJson(jsonUser);
+  }
+
   Future sendOtp({required String email}) async {
     await supabase.auth.signInWithOtp(email: email);
   }
@@ -53,7 +57,7 @@ class DBService {
 
   Future<List<Medication>> getUserMedications() async {
     List<Medication> medList = [];
-    final jsonList = await supabase.from("Medication").select().eq("user_id", await getCurrentUserId());
+    final jsonList = await supabase.from("Medication").select().eq("user_id", await getCurrentUserId()).order("time_eat", ascending: true);
 
     for (var medication in jsonList) {
       medList.add(Medication.fromJson(medication));
@@ -89,4 +93,12 @@ class DBService {
    print("hhhiidddidhk");
     return updatedMedication;
   }
+
+  Future editUserInfo({required String name, required int age, required String password}) async{
+    if ((password != locator.currentUser.password)){
+      await supabase.auth.updateUser(UserAttributes(password: password,));
+    }
+    await supabase.from("User").update({"name": name, "age": age, "password": password}).eq("id", await getCurrentUserId());
+  }
+  
 }
