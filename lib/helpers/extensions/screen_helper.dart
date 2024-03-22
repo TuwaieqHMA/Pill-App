@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/pages/edit_medication_page.dart';
-import 'package:pill_app/services/database_service.dart';
 import 'package:pill_app/utils/colors.dart';
 
 extension Screen on BuildContext {
@@ -106,7 +105,7 @@ extension Screen on BuildContext {
               context.pop();
               }
 
-            ),
+            },
             child: Container(
               padding: const EdgeInsets.all(14),
               child:  Text(
