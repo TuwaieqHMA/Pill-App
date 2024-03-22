@@ -19,8 +19,6 @@ class MedicineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationBloc = context.read<MedicationBloc>();
-    // medicationBloc.add(ShowUserMedicationsEvent());
-
     final Color color;
     switch (medication.currentStatus) {
       case "تم أخذ الجرعة":
@@ -129,8 +127,6 @@ class MedicineCard extends StatelessWidget {
                             color: calmGreenColor,
                             icon: Icons.done_outlined,
                             onPressed: () {
-                              // TODO update status
-                              //! update status convert to bloc
 
                               context.showStatusDialog(
                                   title: "تاكيد أخذ الدواء",
@@ -149,8 +145,6 @@ class MedicineCard extends StatelessWidget {
                           ),
                         ],
                       );
-
-                      // }
                     }
                     return const Text('أنا أحاول فيه');
                   },

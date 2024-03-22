@@ -58,7 +58,6 @@ extension Screen on BuildContext {
       backgroundColor: calmRedColor,
     ));
   }
-    
 
   showStatusDialog({
     required String title,
@@ -71,7 +70,12 @@ extension Screen on BuildContext {
     showDialog(
       context: this,
       builder: (context) => AlertDialog(
-        title: Text(title, textAlign: TextAlign.right, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: calmGreenColor),),
+        title: Text(
+          title,
+          textAlign: TextAlign.right,
+          style: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.w600, color: calmGreenColor),
+        ),
         content: Text(
           dialogContent,
           textAlign: TextAlign.right,
@@ -84,34 +88,44 @@ extension Screen on BuildContext {
             },
             child: Container(
               padding: const EdgeInsets.all(14),
-              child:  const Text(
+              child: const Text(
                 "إلغاء",
                 textAlign: TextAlign.left,
-                style: TextStyle(color: greyColor, fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    color: greyColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ),
           TextButton(
             onPressed: () {
-              if(textStatus == "إعادة جدولة")
-              {
-                push(EditMedicationPage(medication: medication, isChangingTime: true,),  true);
+              if (textStatus == "إعادة جدولة") {
+                pop();
+                push(
+                    EditMedicationPage(
+                      medication: medication,
+                      isChangingTime: true,
+                    ),
+                    true);
+                context.read<MedicationBloc>().add(MedicationStatusUpdateEvent( medication: medication, newStatus: textStatus));
               } else {
                 print("preeseee");
-                
-                context.read<MedicationBloc>().add(MedicationStatusUpdateEvent(medication: medication, newStatus: textStatus));
-              // DBService().updateCurrentState(
-              //     medication: medication, newStatus: textStatus);
-              context.pop();
-              }
 
+                context.read<MedicationBloc>().add(MedicationStatusUpdateEvent(
+                    medication: medication, newStatus: textStatus));
+                context.pop();
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(14),
-              child:  Text(
+              child: Text(
                 action1,
                 textAlign: TextAlign.right,
-                style: const TextStyle(color: calmGreenColor, fontSize: 18, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                    color: calmGreenColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ),
