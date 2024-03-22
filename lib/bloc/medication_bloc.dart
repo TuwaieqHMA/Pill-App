@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/models/medication_model.dart';
@@ -16,6 +17,7 @@ class MedicationBloc extends Bloc<MedicationEvent, MedicationState> {
   MedicationBloc() : super(MedicationInitial()) {
     on<ShowUserMedicationsEvent>(showMedication);
     on<AddMedicationEvent>(addMedication);
+    on<MedicationStatusUpdateEvent>(statusUpdate);
     on<EditMedicationEvent>(editMedication);
     on<RemoveMedicationEvent>(removeMedication);
   }
@@ -102,6 +104,18 @@ class MedicationBloc extends Bloc<MedicationEvent, MedicationState> {
       await showMedication(ShowUserMedicationsEvent(), emit);
     } catch (e) {
       emit(MedicationErrorState(msg: "حدث خطأ أثناء عملية إزالة دوائك"));
+    }
+  }
+
+  FutureOr<void> statusUpdate(MedicationStatusUpdateEvent event, Emitter<MedicationState> emit) async {
+    emit(MedicationLoadingState());
+    try{
+      await DBService().updateCurrentState(medication: event.medication, newStatus: event.newStatus);
+      
+      emit(MedicationStatusUpdateState(updatedMedication: await DBService().getUpdatedMedication(medication: event.medication)));
+      await showMedication(ShowUserMedicationsEvent(), emit);
+    }catch(e){
+      emit(MedicationErrorState(msg: "حدث خطا أثناء تحديث الحالة"));
     }
   }
 }

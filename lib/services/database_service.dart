@@ -78,10 +78,20 @@ class DBService {
   }
 
 
-  Future updateCurrentState({required Medication medication, required String text}) async {
-    await supabase.from("Medication").insert({
-      'current_status' : text
-    }).eq('id', medication.userId);
+  Future<void> updateCurrentState({required Medication medication, required String newStatus}) async {
+    await supabase.from("Medication").update({
+      'current_status' : newStatus,
+    }).eq('id', medication.id!);
+    print(medication.id!);
+    print(" iiiidddd =====  medication.id!");
+  }
+
+  Future getUpdatedMedication({required Medication medication }) async {
+    // List<Medication> medList = [];
+    final updatedMedication = await supabase.from("Medication").select().eq("id", medication.id! ).single();
+
+   print("hhhiidddidhk");
+    return updatedMedication;
   }
 
   Future editUserInfo({required String name, required int age, required String password}) async{
