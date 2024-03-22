@@ -92,7 +92,7 @@ extension Screen on BuildContext {
             onPressed: () {
               if(textStatus == "إعادة جدولة")
               {
-                push(EditMedicationPage(medication: medication),  true);
+                push(EditMedicationPage(medication: medication, isChangingTime: true,),  true);
               }else{
               DBService().updateCurrentState(
                   medication: medication, text: textStatus);

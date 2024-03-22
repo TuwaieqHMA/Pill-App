@@ -22,13 +22,9 @@ final class RemoveMedicationEvent extends MedicationEvent {
   RemoveMedicationEvent({required this.medication});
 }
 
-final class EditMedication extends MedicationEvent {
+final class EditMedicationEvent extends MedicationEvent {
   final Medication newMedication;
   final int medicationId;
 
-  EditMedication({required this.medicationId, required this.newMedication});
-}
-
-final class UpdatePageEvent extends MedicationEvent {
-  
+  EditMedicationEvent({required this.medicationId, required this.newMedication});
 }

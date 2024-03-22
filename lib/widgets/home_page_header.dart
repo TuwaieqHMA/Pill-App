@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
+import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/login_page.dart';
+import 'package:pill_app/pages/profile_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 
@@ -11,6 +14,9 @@ class HomePageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locator = GetIt.I.get<HomeData>();
+    final authBloc = context.read<AuthBloc>();
+    authBloc.add(GetUserInfoEvent());
     return SizedBox(
       width: context.getWidth(),
       height: context.getHeight() * 0.29,
@@ -37,17 +43,21 @@ class HomePageHeader extends StatelessWidget {
                   fontWeight: FontWeight.w700),
             ),
           ),
-          Positioned(
-            right: context.getWidth() * 0.07,
-            bottom: context.getHeight() * 0.09,
-            child: const Text(
-              "سارة ",
-              style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 32,
-                  fontFamily: tajwalFont,
-                  fontWeight: FontWeight.w700),
-            ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return Positioned(
+                right: context.getWidth() * 0.07,
+                bottom: context.getHeight() * 0.09,
+                child: Text(
+                  locator.currentUser.name.split(" ")[0],
+                  style: const TextStyle(
+                      color: whiteColor,
+                      fontSize: 32,
+                      fontFamily: tajwalFont,
+                      fontWeight: FontWeight.w700),
+                ),
+              );
+            },
           ),
           //  log out
           // Positioned(
@@ -78,12 +88,24 @@ class HomePageHeader extends StatelessWidget {
               top: context.getHeight() * 0.03,
               left: context.getWidth() * 0.05,
               child: IconButton(
-                onPressed: (){
+                onPressed: () {
                   context.read<AuthBloc>().add(SignOutEvent());
                   context.push(LoginPage(canGoBack: false), false);
                 },
                 icon: const Icon(
                   Icons.logout_rounded,
+                  color: whiteColor,
+                ),
+              )),
+              Positioned(
+              top: context.getHeight() * 0.03,
+              left: context.getWidth() * 0.85,
+              child: IconButton(
+                onPressed: () {
+                  context.push(ProfilePage(), true);
+                },
+                icon: const Icon(
+                  Icons.person,
                   color: whiteColor,
                 ),
               )),
