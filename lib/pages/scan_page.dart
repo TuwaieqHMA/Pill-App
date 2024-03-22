@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
 import 'package:pill_app/widgets/bottom_button.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class ScanPage extends StatelessWidget {
   const ScanPage({super.key});
@@ -14,19 +16,22 @@ class ScanPage extends StatelessWidget {
       body:  SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          child: ListView(
+            shrinkWrap: true,
             children: [
               height32,
-               const Text(
-                "مسح الدواء",
-                style: TextStyle(
-                  fontSize: 33,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: poppinsFont,
-                  color: blackColor,
-                ),
-              ),
+               const Align(
+                alignment: Alignment.centerRight,
+                 child: Text(
+                  "مسح الدواء",
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: poppinsFont,
+                    color: blackColor,
+                  ),
+                               ),
+               ),
               height48,
               
               Image.asset("assets/images/qr_code.png",
@@ -58,10 +63,14 @@ class ScanPage extends StatelessWidget {
                 ),
               ),
               height32,
-              const BottomButton(
+              BottomButton(
+                onTap: () async{
+                  var res = await context.push(const SimpleBarcodeScannerPage(), true);
+                  print(res); 
+                },
                 fillColor: signatureGreenColor,
                 text: "إمسح الآن",
-                textstyle: TextStyle(color: whiteColor, fontSize: 24, fontWeight: FontWeight.w500),
+                textstyle: const TextStyle(color: whiteColor, fontSize: 24, fontWeight: FontWeight.w500),
                 borderSide: BorderSide.none,
               ),
 
