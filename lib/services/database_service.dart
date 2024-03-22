@@ -1,3 +1,4 @@
+import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/models/saed_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -48,5 +49,12 @@ class DBService {
 
   Future resetPassword({required String newPassword}) async {
     await supabase.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
+
+  Future updateCurrentState({required Medication medication, required String text}) async {
+    await supabase.from("Medication").insert({
+      'current_status' : text
+    }).eq('id', medication.userId);
   }
 }
