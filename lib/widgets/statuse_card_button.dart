@@ -24,7 +24,7 @@ class StatusCardButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
             side: BorderSide.none,
           ))),
-      onPressed: onPressed, //() {},
+      onPressed: onPressed, 
       child: Icon(
         icon,
         color: whiteColor,
