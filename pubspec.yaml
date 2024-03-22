@@ -17,11 +17,20 @@ dependencies:
   supabase_flutter: ^2.3.4
   intl: ^0.19.0
   flutter_otp_text_field: ^1.1.0+2
+  otp_timer_button: ^1.1.1
+  timer_button: ^2.1.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+
+flutter_native_splash:
+        color: "#4ACAAD"
+        image: assets/images/saed_app_logo.png
+        android: true
+        ios: true
 
 flutter:
   uses-material-design: true
@@ -90,3 +99,4 @@ flutter:
           weight: 200
         - asset: assets/fonts/Tajawal-Medium.ttf
           weight: 500
+

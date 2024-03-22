@@ -31,6 +31,12 @@ final class SendOtpEvent extends AuthEvent {
   SendOtpEvent({required this.email});
 }
 
+final class ResendOtpEvent extends AuthEvent {
+  final String email;
+
+  ResendOtpEvent({required this.email});
+}
+
 final class VerifyOtpEvent extends AuthEvent {
   final String email;
 
