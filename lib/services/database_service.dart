@@ -73,4 +73,10 @@ class DBService {
     await supabase.from("Medication").update(newMedication.toJson()).eq("id", medicationId);
   }
 
+
+  Future updateCurrentState({required Medication medication, required String text}) async {
+    await supabase.from("Medication").insert({
+      'current_status' : text
+    }).eq('id', medication.userId);
+  }
 }

@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
                             beforeAfterEating: "بعد الأكل",
                             numberPill: 1,
                             userId: "33ddgrgt",
-                            currentStatus: "تم أخذ الدواء",
+                            currentStatus: "لم يتم",
                             startDate: DateTime.now(),
                             endDate:
                                 DateTime.now().add(const Duration(days: 20))),

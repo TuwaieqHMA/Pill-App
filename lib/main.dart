@@ -34,7 +34,9 @@ class MainApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RedirectWidget(),
+        home:
+        // BottomNavBarPage(),
+        RedirectWidget(),
         // HomePage(),
       ),
     );
