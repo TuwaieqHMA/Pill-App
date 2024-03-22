@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
-import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
@@ -17,8 +16,9 @@ import 'package:pill_app/widgets/selection_drop_down_menu.dart';
 
 // ignore: must_be_immutable
 class EditMedicationPage extends StatelessWidget {
-  EditMedicationPage({super.key, required this.medication});
+  EditMedicationPage({super.key, required this.medication, this.isChangingTime = false});
   final Medication medication;
+  final bool? isChangingTime;
   TextEditingController medicationNameController = TextEditingController();
   TextEditingController durationController = TextEditingController();
   TextEditingController pillCountController = TextEditingController();
@@ -29,8 +29,9 @@ class EditMedicationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     medicationNameController.text = medication.medicationName;
     timeController.text =
-        "${medication.timeEat!.hour}:${medication.timeEat!.minute}";
+        "${medication.timeEat!.hourOfPeriod}:${medication.timeEat!.minute}";
     final locator = GetIt.I.get<HomeData>();
+    final medicationBloc = context.read<MedicationBloc>();
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -58,18 +59,22 @@ class EditMedicationPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is MedicationErrorState) {
                   context.showErrorSnackBar(state.msg);
-                } else if (state is MedicationSucessState) {
+                } else if (state is MedicationEditedState) {
                   context.showSuccessSnackBar(state.msg);
+                  context.pop();
+                }else if (state is MedicationRemovedState){
+                  context.showErrorSnackBar(state.msg);
+                  context.pop();
                 }
               },
               builder: (context, state) {
-                if (state is MedicationLoadingState) {
+                if (state is MedicationLoadingState){
                   return const Center(
                     child: CircularProgressIndicator(
                       color: midGreenColor,
                     ),
                   );
-                } else {
+                }else{
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -84,6 +89,7 @@ class EditMedicationPage extends StatelessWidget {
                       ),
                       height16,
                       HeaderIconTextField(
+                        isreadOnly: isChangingTime,
                         controller: medicationNameController,
                         headerText: "اسم الدواء",
                         hintText: "اكتب...",
@@ -108,12 +114,12 @@ class EditMedicationPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           SelectionDropDownMenu(
-                            initialValue: "حبة     ${medication.numberPill}",
+                            isEnabled: !isChangingTime!,
                             onSelected: (value) {
                               pillCountController.text = "حبة     $value";
                             },
                             controller: pillCountController,
-                            hintText: "......  حبة",
+                            hintText: "حبة     ${medication.numberPill}",
                             itemList: List.generate(
                                 3,
                                 (index) => DropdownMenuEntry(
@@ -122,13 +128,12 @@ class EditMedicationPage extends StatelessWidget {
                                 SvgPicture.asset("assets/icons/duo_pills.svg"),
                           ),
                           SelectionDropDownMenu(
-                            initialValue: DropdownMenuEntry(
-                                    value: medication.endDate!.difference(medication.startDate!).inDays + 1, label: "${medication.endDate!.difference(medication.startDate!).inDays + 1}"),
+                            isEnabled: !isChangingTime!,
                             onSelected: (value) {
                               durationController.text = "يوم   $value";
                             },
                             controller: durationController,
-                            hintText: "......  يوم",
+                            hintText: "يوم   ${medication.endDate!.difference(medication.startDate!).inDays}",
                             itemList: List.generate(
                                 30,
                                 (index) => DropdownMenuEntry(
@@ -148,16 +153,19 @@ class EditMedicationPage extends StatelessWidget {
                       ),
                       height8,
                       SelectionDropDownMenu(
-                        initialValue: medication.beforeAfterEating,
+                        isEnabled: !isChangingTime!,
                         controller: beforeAfterController,
-                        hintText: "......",
+                        hintText: medication.beforeAfterEating,
                         itemList: const [
                           DropdownMenuEntry(
                               value: "قبل الأكل", label: "قبل الأكل"),
                           DropdownMenuEntry(
                               value: "بعد الأكل", label: "بعد الأكل")
                         ],
-                        icon: SvgPicture.asset("assets/icons/calendar.svg"),
+                        icon: const Icon(
+                              Icons.fastfood_rounded,
+                              color: greyColor,
+                            ),
                       ),
                       height16,
                       Builder(builder: (context) {
@@ -173,7 +181,7 @@ class EditMedicationPage extends StatelessWidget {
                           isreadOnly: true,
                           onTap: () async {
                             final TimeOfDay? pickedTime =
-                                await locator.getTimeOfDay(context);
+                                await locator.getTimeOfDay(context, medication.timeEat);
                             if (pickedTime != null) {
                               timeController.text =
                                   "${pickedTime.hour}:${pickedTime.minute}";
@@ -199,7 +207,26 @@ class EditMedicationPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     BottomButton(
-                      onTap: () {},
+                      onTap: () {
+                        medicationBloc.add(EditMedicationEvent(
+                          medicationId: medication.id!,
+                          newMedication: Medication(
+                        medicationName: medicationNameController.text,
+                        startDate: (durationController.text.isNotEmpty) ? DateTime.now() : medication.startDate,
+                        endDate: (durationController.text.isNotEmpty)
+                            ? DateTime.now().add(Duration(
+                                days: int.parse(durationController.text
+                                    .replaceAll("يوم   ", ""))))
+                            : medication.endDate,
+                        beforeAfterEating: (beforeAfterController.text.isNotEmpty) ? beforeAfterController.text : medication.beforeAfterEating,
+                        currentStatus: medication.currentStatus,
+                        numberPill: (pillCountController.text.isNotEmpty)
+                            ? int.parse(pillCountController.text
+                                .replaceAll("حبة     ", ""))
+                            : medication.numberPill,
+                        timeEat: locator.stringToTimeOfDay(timeController.text),
+                        userId: locator.currentUserId),));
+                      },
                       text: "حفظ",
                       fillColor: calmGreenColor,
                       borderSide: BorderSide.none,
@@ -211,7 +238,9 @@ class EditMedicationPage extends StatelessWidget {
                     ),
                     height16,
                     BottomButton(
-                      onTap: () {},
+                      onTap: () {
+                        medicationBloc.add(RemoveMedicationEvent(medication: medication));
+                      },
                       text: "حذف",
                       fillColor: whiteColor,
                       borderSide: const BorderSide(
@@ -229,6 +258,6 @@ class EditMedicationPage extends StatelessWidget {
               }
             },
           ),
-        ));
+        ),);
   }
 }

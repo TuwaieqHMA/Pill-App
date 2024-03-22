@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
+import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
-import 'package:pill_app/services/database_service.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -15,7 +15,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationBloc = context.read<MedicationBloc>();
+    if(locator.userMedicationList.isEmpty){
     medicationBloc.add(ShowUserMedicationsEvent());
+    }
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -43,7 +45,11 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: BlocConsumer<MedicationBloc, MedicationState>(
-                  listener: (context, state) {},
+                  listener: (context, state) {
+                    if(state is MedicationErrorState){
+                      context.showErrorSnackBar(state.msg);
+                    }
+                  },
                   builder: (context, state) {
                     if (state is MedicationLoadingState) {
                       return const Center(

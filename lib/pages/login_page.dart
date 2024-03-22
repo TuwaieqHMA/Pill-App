@@ -42,6 +42,8 @@ class LoginPage extends StatelessWidget {
           }else if(state is AuthSucessState){
             context.showSuccessSnackBar(state.msg);
             context.push(const BottomNavBarPage(), false);
+          }else if(state is AuthSignoutState){
+            context.showSuccessSnackBar(state.msg);
           }
         },
         builder: (context, state) {

@@ -10,6 +10,8 @@ import 'package:pill_app/utils/spaces.dart';
 import 'package:pill_app/widgets/bottom_button.dart';
 import 'package:pill_app/widgets/page_header.dart';
 import 'package:pill_app/widgets/simplfied_header_textfield.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 
 // ignore: must_be_immutable
 class OtpVerificationPage extends StatelessWidget {
@@ -39,9 +41,7 @@ class OtpVerificationPage extends StatelessWidget {
           ),
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if(state is AuthErrorState){
-                context.showErrorSnackBar(state.msg);
-              }else if (state is AuthSucessState){
+              if (state is AuthOTPVerifiedState){
                 context.showSuccessSnackBar(state.msg);
                 context.push(ResetPasswordPage(), true);
               }
@@ -69,11 +69,21 @@ class OtpVerificationPage extends StatelessWidget {
                     textAlign: TextAlign.right,
                   ),
                   height16,
-                  SimplfiedHeaderTextField(
-                    controller: otpController,
-                    label: "الرمز",
+                  OtpTextField(
+                    numberOfFields: 6,
+                    borderColor: greyColor,
+                    focusedBorderColor: signatureGreenColor,
+                    showFieldAsBox: true,
+                    fieldWidth: context.getWidth() * .12,
+                    fieldHeight: context.getWidth() * .12,
+                    cursorColor: signatureGreenColor,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    maxLength: 6,
+                    onCodeChanged: (value) {
+                      otpController.text = value;
+                    },
+                    onSubmit: (value) {
+                      context.read<AuthBloc>().add(VerifyOtpEvent(email: email, otpToken: value));
+                    },
                   ),
                   height16,
                   BottomButton(

@@ -7,7 +7,7 @@ import 'package:pill_app/utils/spaces.dart';
 class SimplfiedHeaderTextField extends StatelessWidget {
   const SimplfiedHeaderTextField({
     super.key,
-    required this.controller, required this.label, this.isObscured = false, this.textDirection, this.inputFormatters, this.maxLength,
+    required this.controller, required this.label, this.isObscured = false, this.textDirection, this.inputFormatters, this.maxLength, this.isEnabled = true, this.isReadOnly = false,
   });
 
   final String label;
@@ -16,6 +16,8 @@ class SimplfiedHeaderTextField extends StatelessWidget {
   final TextDirection? textDirection;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final bool? isEnabled;
+  final bool? isReadOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,8 @@ class SimplfiedHeaderTextField extends StatelessWidget {
         Text(label, style: const TextStyle(color: blackColor, fontFamily: tajwalFont, fontSize: 18, fontWeight: FontWeight.bold, ),),
         height8,
         TextField(
+          readOnly: isReadOnly!,
+          enabled: isEnabled,
           maxLength: maxLength,
           inputFormatters: inputFormatters,
           textDirection: textDirection,
