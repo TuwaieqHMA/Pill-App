@@ -18,7 +18,6 @@ class BottomNavBarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final serviceLocator = GetIt.I.get<HomeData>();
-    final dataLocator = GetIt.I.get<HomeData>();
 
     return BlocProvider(
       create: (context) => BottomNavBarBloc(),

@@ -32,8 +32,6 @@ class MedicineCard extends StatelessWidget {
       default:
         color = Colors.transparent;
     }
-
-    print(medication.medicationName);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -190,7 +188,7 @@ class MedicineCard extends StatelessWidget {
                                   color: greyColor),
                             ),
                       Text(
-                        "${medication.timeEat.hour.toString()}:${medication.timeEat.minute.toString()}",
+                        "${medication.timeEat!.hourOfPeriod.toString()}:${medication.timeEat!.minute.toString()}",
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
