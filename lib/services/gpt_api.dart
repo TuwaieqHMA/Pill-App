@@ -14,7 +14,7 @@ class ChatGPT {
       uri,
       headers: {
      
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer ",
         "Content-Type": "application/json"
       },
       body: json.encode({
@@ -43,7 +43,7 @@ class ChatGPT {
       uri,
       headers: {
       
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer ",
         "Content-Type": "application/json"
       },
       body: json.encode({
