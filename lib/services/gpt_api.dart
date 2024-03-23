@@ -14,7 +14,7 @@ class ChatGPT {
       uri,
       headers: {
      
-            "Authorization": "Bearer ",
+            "Authorization": " ",
         "Content-Type": "application/json"
       },
       body: json.encode({
@@ -43,7 +43,7 @@ class ChatGPT {
       uri,
       headers: {
       
-            "Authorization": "Bearer ",
+            "Authorization": " ",
         "Content-Type": "application/json"
       },
       body: json.encode({
