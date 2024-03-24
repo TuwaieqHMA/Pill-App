@@ -200,7 +200,7 @@ class MedicineCard extends StatelessWidget {
                       width8,
                       // ? // set morning or night
                       Text(
-                        medication.timeEat!.period.name == "pm" ? "ص " : "م ",
+                        medication.timeEat!.period.name == "pm" ? "م " : "ص ",
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,

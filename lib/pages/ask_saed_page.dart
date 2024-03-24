@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pill_app/bloc/auth_bloc.dart';
+import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/test_pages/chat_page.dart';
 import 'package:pill_app/utils/colors.dart';
@@ -10,6 +14,7 @@ class AskSaedPage extends StatelessWidget {
   const AskSaedPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final locator = GetIt.I.get<HomeData>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -32,20 +37,24 @@ class AskSaedPage extends StatelessWidget {
               right: 65,
               child: Container(
                 height: 45,
-                width: 95,
+                width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   color: Colors.white,
                 ),
                 child: Center(
-                  child: Text(
-                    'مرحبا سارة',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: poppinsFont,
-                      color: Colors.transparent.withOpacity(0.7),
-                    ),
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return Text(
+                        'مرحبا ${locator.currentUser.name.split(" ")[0]}',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: poppinsFont,
+                          color: Colors.transparent.withOpacity(0.7),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )),
@@ -58,7 +67,7 @@ class AskSaedPage extends StatelessWidget {
                 width: 180,
               )),
           Positioned(
-              bottom: 318,
+              bottom: 288,
               right: 215,
               child: Image.asset(
                 'assets/images/hand.png',
@@ -66,7 +75,7 @@ class AskSaedPage extends StatelessWidget {
                 width: 60,
               )),
           const Positioned(
-              bottom: 318,
+              bottom: 288,
               right: 138,
               child: TextSaed(
                 text: 'ساعد',

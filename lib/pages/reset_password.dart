@@ -25,7 +25,7 @@ class ResetPasswordPage extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size(context.getWidth(), context.getHeight() * .14,),
           child: PageHeader(
-            bottomText: "تحقق من الرمز",
+            bottomText: "تغيير كلمة المرور",
             height: context.getHeight() * .14,
             canGoBack: true,
             showLogo: false,
@@ -67,11 +67,13 @@ class ResetPasswordPage extends StatelessWidget {
                   ),
                   height16,
                   SimplfiedHeaderTextField(
+                    isObscured: true,
                     controller: passwordController,
                     label: "كلمة المرور",
                   ),
                   height16,
                   SimplfiedHeaderTextField(
+                    isObscured: true,
                     controller: rePasswordController,
                     label: "كلمة المرور مجدداً",
                   ),

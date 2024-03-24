@@ -42,6 +42,7 @@ class MainApp extends StatelessWidget {
         ),
        BlocProvider<ChatBloc>(
           create: (BuildContext context) => ChatBloc(),
+       ),
         BlocProvider(
           create: (context) => MedicationBloc(),
         ),
