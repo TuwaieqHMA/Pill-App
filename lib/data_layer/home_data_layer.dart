@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:pill_app/models/medication_model.dart';
+import 'package:pill_app/models/saed_user.dart';
 import 'package:pill_app/pages/add_medication_page.dart';
 import 'package:pill_app/pages/ask_saed_page.dart';
 import 'package:pill_app/pages/home_page.dart';
@@ -21,8 +24,11 @@ class HomeData {
 
   int selectedPage = 0;
 
+
   String currentUserId = "";
   String currentUserEmail = "";
+  List<Medication> userMedicationList = [];
+  SaedUser currentUser = SaedUser(name: "بك", email: "someone@hotmail.com", password: "123456", age: 24);
 
   TimePickerThemeData timePickerTheme() {
     return const TimePickerThemeData(
@@ -49,12 +55,15 @@ class HomeData {
     );
   }
 
-  Future<TimeOfDay?> getTimeOfDay(BuildContext context) async {
+  Future<TimeOfDay?> getTimeOfDay(BuildContext context, TimeOfDay? initialTime) async {
     return await showTimePicker(
         cancelText: "الرجوع",
         confirmText: "إختيار",
+        minuteLabelText: "دقيقة",
+        hourLabelText: "ساعة",
+        helpText: "إختيار الوقت",
         context: context,
-        initialTime: TimeOfDay(
+        initialTime: initialTime ?? TimeOfDay(
             hour: DateTime.now().hour, minute: DateTime.now().minute));
   }
   final box = GetStorage();
@@ -97,4 +106,9 @@ class HomeData {
     }
   }
  
+
+  TimeOfDay stringToTimeOfDay(String tod) {
+  final format = DateFormat.Hm();
+  return TimeOfDay.fromDateTime(format.parse(tod));
+}
 }

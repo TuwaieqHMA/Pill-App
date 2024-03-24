@@ -30,18 +30,18 @@ class SignupPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), 110),
+          preferredSize: Size(context.getWidth(), context.getHeight() * .14),
           child: PageHeader(
             canGoBack: canGoBack,
             showLogo: false,
-            height: 110,
+            height: context.getHeight() * .14,
             bottomText: 'إنشاء الحساب',
           )),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthErrorState){
             context.showErrorSnackBar(state.msg);
-          }else if(state is AuthSucessState){
+          }else if(state is AuthSignUpState){
             context.showSuccessSnackBar(state.msg);
             context.push(LoginPage(canGoBack: false,), false);
           }

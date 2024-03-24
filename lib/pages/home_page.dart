@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pill_app/bloc/medication_bloc.dart';
+import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
-import 'package:pill_app/services/database_service.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -12,6 +14,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final medicationBloc = context.read<MedicationBloc>();
+    if(locator.userMedicationList.isEmpty){
+    medicationBloc.add(ShowUserMedicationsEvent());
+    }
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -38,25 +44,32 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      MedicineCard(
-                        fromHome: true,
-                        medication: Medication( //Used as an example to test the UI
-                            medicationName: "الزنك",
-                            timeEat: const TimeOfDay(hour: 10, minute: 30),
-                            beforeAfterEating: "بعد الأكل",
-                            numberPill: 1,
-                            userId: "33ddgrgt",
-                            currentStatus: "تم أخذ الدواء",
-                            startDate: DateTime.now(),
-                            endDate:
-                                DateTime.now().add(const Duration(days: 20))),
-                      ),
-                      // MedicineCard(fromHome: true ,),
-                    ]),
+                child: BlocConsumer<MedicationBloc, MedicationState>(
+                  listener: (context, state) {
+                    if(state is MedicationErrorState){
+                      context.showErrorSnackBar(state.msg);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is MedicationLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: midGreenColor,
+                        ),
+                      );
+                    }else{
+                      return (locator.userMedicationList.isNotEmpty) ?
+                     ListView.builder(
+                      itemCount: locator.userMedicationList.length,
+                      itemBuilder: (context, index) {
+                        return MedicineCard(
+                            fromHome: true,
+                            medication: locator.userMedicationList[index]);
+                      },
+                    ) : const Center(child: Text("...لم يتم إضافة أي أدوية بعد", style: TextStyle(color: greyTextColor, fontFamily: poppinsFont, fontSize: 24),),);
+                    }
+                  },
+                ),
               ),
             ),
           ],

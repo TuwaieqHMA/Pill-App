@@ -21,10 +21,10 @@ class EmailVerifcationPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), 110),
-          child: const PageHeader(
+          preferredSize: Size(context.getWidth(), context.getHeight() * .14,),
+          child: PageHeader(
             bottomText: "إعادة تعيين كلمة المرور",
-            height: 110,
+            height: context.getHeight() * .14,
             canGoBack: true,
             showLogo: false,
             bottomTextAlignment: Alignment.center,
@@ -37,9 +37,7 @@ class EmailVerifcationPage extends StatelessWidget {
           ),
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if(state is AuthErrorState){
-                context.showErrorSnackBar(state.msg);
-              }else if (state is AuthSucessState){
+              if (state is AuthEmailVerifiedState){
                 context.showSuccessSnackBar(state.msg);
                 context.push(OtpVerificationPage(email: emailController.text,), true);
               }
@@ -48,7 +46,6 @@ class EmailVerifcationPage extends StatelessWidget {
               if (state is AuthLoadingState){
                 return const Center(child: CircularProgressIndicator(color: midGreenColor,),);
               }else {
-
               return ListView(
                 shrinkWrap: true,
                 children: [

@@ -31,6 +31,12 @@ final class SendOtpEvent extends AuthEvent {
   SendOtpEvent({required this.email});
 }
 
+final class ResendOtpEvent extends AuthEvent {
+  final String email;
+
+  ResendOtpEvent({required this.email});
+}
+
 final class VerifyOtpEvent extends AuthEvent {
   final String email;
 
@@ -43,4 +49,23 @@ final class ChangePasswordEvent extends AuthEvent {
   final String rePassword;
 
   ChangePasswordEvent({required this.password, required this.rePassword});
+}
+
+final class GetUserInfoEvent extends AuthEvent {
+  
+}
+
+final class ActivateEditModeEvent extends AuthEvent {
+
+}
+final class DeactivateEditModeEvent extends AuthEvent {
+
+}
+
+final class EditProfileEvent extends AuthEvent {
+  final String name;
+  final String age;
+  final String password;
+
+  EditProfileEvent({required this.name, required this.age, required this.password});
 }

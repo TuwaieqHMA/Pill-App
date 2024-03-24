@@ -5,7 +5,7 @@ import 'package:pill_app/utils/fonts.dart';
 class SelectionDropDownMenu extends StatelessWidget {
   const SelectionDropDownMenu({
     super.key,
-    required this.controller, required this.hintText, required this.itemList, this.icon, this.onSelected,
+    required this.controller, required this.hintText, required this.itemList, this.icon, this.onSelected, this.initialValue, this.isEnabled = true, this.helperText,
   });
 
   final TextEditingController controller;
@@ -13,11 +13,17 @@ class SelectionDropDownMenu extends StatelessWidget {
   final List<DropdownMenuEntry<dynamic>> itemList;
   final Widget? icon;
   final Function(dynamic)? onSelected;
+  final dynamic initialValue;
+  final bool? isEnabled;
+  final String? helperText;
 
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      helperText: helperText,
+      enabled: isEnabled!,
+      initialSelection: initialValue,
       onSelected: onSelected,
       textStyle: const TextStyle(color: blackColor, fontFamily: poppinsFont, fontSize: 14, fontWeight: FontWeight.w500),
       menuHeight: 160,

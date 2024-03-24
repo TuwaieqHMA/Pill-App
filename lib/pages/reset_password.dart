@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
+import 'package:pill_app/pages/login_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
@@ -22,10 +23,10 @@ class ResetPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), 110),
-          child: const PageHeader(
+          preferredSize: Size(context.getWidth(), context.getHeight() * .14,),
+          child: PageHeader(
             bottomText: "تحقق من الرمز",
-            height: 110,
+            height: context.getHeight() * .14,
             canGoBack: true,
             showLogo: false,
             bottomTextAlignment: Alignment.center,
@@ -38,10 +39,9 @@ class ResetPasswordPage extends StatelessWidget {
           ),
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthErrorState){
-                context.showErrorSnackBar(state.msg);
-              }else if (state is AuthSucessState){
+              if (state is AuthPasswordChangedState){
                 context.showSuccessSnackBar(state.msg);
+                context.push(LoginPage(canGoBack: false), false);
               }
             },
             builder: (context, state) {
