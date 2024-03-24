@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/models/medication_model.dart';

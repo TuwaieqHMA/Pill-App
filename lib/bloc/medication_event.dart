@@ -30,7 +30,7 @@ final class EditMedicationEvent extends MedicationEvent {
 }
 
 final class MedicationStatusUpdateEvent extends MedicationEvent {
-  Medication medication;
-  String newStatus;
+  final Medication medication;
+  final String newStatus;
   MedicationStatusUpdateEvent({required this.medication, required this.newStatus});
 }

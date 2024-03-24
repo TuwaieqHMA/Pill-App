@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/bloc/chat_bloc.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
-import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
 import 'package:pill_app/utils/setup.dart';
 import 'package:pill_app/widgets/redirect_widget.dart';
 
@@ -30,6 +29,7 @@ class MainApp extends StatelessWidget {
         ),
        BlocProvider<ChatBloc>(
           create: (BuildContext context) => ChatBloc(),
+       ),
         BlocProvider(
           create: (context) => MedicationBloc(),
         ),
