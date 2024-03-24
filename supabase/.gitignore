@@ -3,4 +3,4 @@
 .temp
 .env
 
-/supabase/functions/service-account.json
+supabase/functions/service-account.json
