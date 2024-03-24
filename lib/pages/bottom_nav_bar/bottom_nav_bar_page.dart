@@ -1,7 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/add_medication_page.dart';
@@ -20,7 +22,18 @@ class BottomNavBarPage extends StatelessWidget {
       create: (context) => BottomNavBarBloc(),
       child: Builder(builder: (context) {
         final bloc = context.read<BottomNavBarBloc>();
-        return BlocBuilder<BottomNavBarBloc, BottomNavBarState>(
+        final authBloc = context.read<AuthBloc>();
+        authBloc.add(GetFcmTokenEvent());
+        return BlocConsumer<BottomNavBarBloc, BottomNavBarState>(
+          listener: (context, state) {
+            FirebaseMessaging.onMessage.listen((payload) async {
+              final notification = payload.notification;
+              if (notification != null) {
+                context.showTopSnackBar(
+                    '${notification.title} : ${notification.body}');
+              }
+            });
+          },
           builder: (context, state) {
             return Scaffold(
               body: serviceLocator.pages[serviceLocator.selectedPage],

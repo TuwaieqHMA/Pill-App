@@ -11,6 +11,7 @@ import 'package:pill_app/widgets/redirect_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setupFireBase();
   await setupDatabase();
   await setup();
 
@@ -47,7 +48,8 @@ class MainApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RedirectWidget(),
+        home:
+        RedirectWidget(),
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pill_app/models/medication_model.dart';
 import 'package:pill_app/models/saed_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -101,6 +103,27 @@ class DBService {
     await supabase.from("User").update({"name": name, "age": age, "password": password}).eq("id", await getCurrentUserId());
   }
 
+  Future getFcmToken() async{
+    await FirebaseMessaging.instance.requestPermission();
+        await FirebaseMessaging.instance.getAPNSToken();
+        FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+        analytics.logAppOpen();
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        if (fcmToken != null) {
+          await storeFcmToken(fcmToken);
+        }
+        FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async{
+          await storeFcmToken(fcmToken);
+         });
+        
+  }
+
+  Future storeFcmToken(String fcmToken) async{
+    if (supabase.auth.currentUser?.id != null){
+      await supabase.from("User").update({"fcm_token": fcmToken}).eq("id", await getCurrentUserId());  
+    }
+    
+  }
   // Future<void> dailyUpdate() async {
   //     print("pill status update successfully.11111111111");
   //   final res = await supabase.from("Medication").update({'current_status': "لم يتم"});

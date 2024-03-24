@@ -59,6 +59,23 @@ extension Screen on BuildContext {
     ));
   }
 
+  showTopSnackBar(
+    String msg,
+  ) {
+    ScaffoldMessenger.of(this).showSnackBar(SnackBar(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      margin: EdgeInsets.only(left: 16, right: 16, bottom: getHeight() - 200),
+      behavior: SnackBarBehavior.floating,
+      content: Text(
+        msg,
+        style: const TextStyle(
+          color: whiteColor,
+        ),
+      ),
+      backgroundColor: deepGreenColor,
+    ));
+  }
+
   showStatusDialog({
     required String title,
     required String dialogContent,

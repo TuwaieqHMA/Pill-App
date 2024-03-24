@@ -26,6 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<DeactivateEditModeEvent>(deactivateEditMode);
     on<EditProfileEvent>(editProfile);
     on<ResendOtpEvent>(resendOtp);
+    on<GetFcmTokenEvent>(getFcmToken);
   }
 
   FutureOr<void> signUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -67,7 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
         );
         emit(AuthSucessState(msg: "تم تسجيل الدخول بنجاح"));
-        locator.currentUserId = await DBService().getCurrentUserId();
+        locator.currentUserId = await DBService().getCurrentUserId();    
       } on AuthException catch (p) {
         if (p.statusCode == "400") {
           emit(AuthErrorState(msg: "يرجى تأكيد الإيميل الخاص بك"));
@@ -225,5 +226,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       print(e);
       emit(AuthErrorState(msg: "الإيميل غير معروف"));
     }
+  }
+  
+  FutureOr<void> getFcmToken(GetFcmTokenEvent event, Emitter<AuthState> emit) async{
+    await DBService().getFcmToken();
   }
 }

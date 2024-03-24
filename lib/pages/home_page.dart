@@ -50,9 +50,10 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: BlocConsumer<MedicationBloc, MedicationState>(
                   listener: (context, state) {
-                    if(state is MedicationErrorState){
+                    if (state is MedicationErrorState) {
                       context.showErrorSnackBar(state.msg);
                     }
+                    
                   },
                   builder: (context, state) {
                     if (state is MedicationLoadingState) {
@@ -61,16 +62,26 @@ class HomePage extends StatelessWidget {
                           color: midGreenColor,
                         ),
                       );
-                    }else{
-                      return (locator.userMedicationList.isNotEmpty) ?
-                     ListView.builder(
-                      itemCount: locator.userMedicationList.length,
-                      itemBuilder: (context, index) {
-                        return MedicineCard(
-                            fromHome: true,
-                            medication: locator.userMedicationList[index]);
-                      },
-                    ) : const Center(child: Text("...لم يتم إضافة أي أدوية بعد", style: TextStyle(color: greyTextColor, fontFamily: poppinsFont, fontSize: 24),),);
+                    } else {
+                      return (locator.userMedicationList.isNotEmpty)
+                          ? ListView.builder(
+                              itemCount: locator.userMedicationList.length,
+                              itemBuilder: (context, index) {
+                                return MedicineCard(
+                                    fromHome: true,
+                                    medication:
+                                        locator.userMedicationList[index]);
+                              },
+                            )
+                          : const Center(
+                              child: Text(
+                                "...لم يتم إضافة أي أدوية بعد",
+                                style: TextStyle(
+                                    color: greyTextColor,
+                                    fontFamily: poppinsFont,
+                                    fontSize: 24),
+                              ),
+                            );
                     }
                   },
                 ),

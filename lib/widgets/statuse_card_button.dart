@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pill_app/utils/colors.dart';
 
+// ignore: must_be_immutable
 class StatusCardButton extends StatelessWidget {
   StatusCardButton(
       {super.key,
