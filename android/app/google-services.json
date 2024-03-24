@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76923257784",
+    "project_id": "saed-app-project",
+    "storage_bucket": "saed-app-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76923257784:android:7f4d6160f753a54d7e054d",
+        "android_client_info": {
+          "package_name": "com.example.pill_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQIjRwRQ0g9Rblpe4m7b5N1a4awy30fqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

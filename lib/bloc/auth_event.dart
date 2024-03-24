@@ -69,3 +69,7 @@ final class EditProfileEvent extends AuthEvent {
 
   EditProfileEvent({required this.name, required this.age, required this.password});
 }
+
+final class GetFcmTokenEvent extends AuthEvent {
+  
+}
