@@ -23,6 +23,10 @@ dependencies:
   timer_button: ^2.1.1
   flutter_native_splash: ^2.4.0
   simple_barcode_scanner: ^0.1.1
+  firebase_core: ^2.27.1
+  firebase_messaging: ^14.7.20
+  firebase_analytics: ^10.8.10
+  cron: ^0.6.0
 
 dev_dependencies:
   flutter_test:

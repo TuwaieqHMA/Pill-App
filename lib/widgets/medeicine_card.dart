@@ -127,7 +127,6 @@ class MedicineCard extends StatelessWidget {
                             color: calmGreenColor,
                             icon: Icons.done_outlined,
                             onPressed: () {
-
                               context.showStatusDialog(
                                   title: "تاكيد أخذ الدواء",
                                   dialogContent:
@@ -149,9 +148,6 @@ class MedicineCard extends StatelessWidget {
                     return const Text('أنا أحاول فيه');
                   },
                 )
-
-              // ================================================
-
               : InkWell(
                   onTap: () {
                     context.push(

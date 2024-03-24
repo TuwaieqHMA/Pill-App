@@ -47,5 +47,4 @@ final class MedicationStatusUpdateState extends MedicationState {
   final Map<String, dynamic> updatedMedication;
   MedicationStatusUpdateState({required this.updatedMedication});
 
-  
 }
