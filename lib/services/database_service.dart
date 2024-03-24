@@ -88,15 +88,11 @@ class DBService {
     await supabase.from("Medication").update({
       'current_status' : newStatus,
     }).eq('id', medication.id!);
-    print(medication.id!);
-    print(" iiiidddd =====  medication.id!");
   }
 
   Future getUpdatedMedication({required Medication medication }) async {
-    // List<Medication> medList = [];
     final updatedMedication = await supabase.from("Medication").select().eq("id", medication.id! ).single();
 
-   print("hhhiidddidhk");
     return updatedMedication;
   }
 
@@ -128,5 +124,16 @@ class DBService {
     }
     
   }
+  // Future<void> dailyUpdate() async {
+  //     print("pill status update successfully.11111111111");
+  //   final res = await supabase.from("Medication").update({'current_status': "لم يتم"});
+  //     print("pill status update successfully. 222222222222");
+  //   if (res.error == null ){
+  //     print("pill status update successfully.");
+  //   }else {
+  //     print("error update pill status.");
+
+  //   }
+  // }
   
 }

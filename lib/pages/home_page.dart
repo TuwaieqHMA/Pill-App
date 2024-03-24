@@ -15,8 +15,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationBloc = context.read<MedicationBloc>();
-    if (locator.userMedicationList.isEmpty) {
-      medicationBloc.add(ShowUserMedicationsEvent());
+
+  dailyUpdate(){
+    medicationBloc.add(ShowUserMedicationsEvent());
+  }
+    if(locator.userMedicationList.isEmpty){
+    medicationBloc.add(ShowUserMedicationsEvent());
     }
     return Scaffold(
       body: SafeArea(

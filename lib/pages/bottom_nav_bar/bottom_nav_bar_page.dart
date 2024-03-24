@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -50,20 +49,9 @@ class BottomNavBarPage extends StatelessWidget {
                   }),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar:
-
-                  // SizedBox(
-                  //   width: context.getWidth() ,
-                  //   height: context.getHeight()  * 0.14,
-                  //   child: Stack(
-                  //     fit: StackFit.expand,
-
-                  //     children: [
-
-                  Padding(
+              bottomNavigationBar: Padding(
                 padding: const EdgeInsets.only(
                   bottom: 5,
-                  // top:40,
                 ),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
@@ -136,30 +124,6 @@ class BottomNavBarPage extends StatelessWidget {
                   ],
                 ),
               ),
-
-              //     Positioned(
-              //         bottom: 35,
-              //         left: context.getWidth()* 0.48,
-
-              //         child: SizedBox(
-              //     height: context.getWidth() * 0.15,
-              //     width: context.getHeight() * 0.07,
-              //     child: FloatingActionButton(
-              //         backgroundColor: calmGreenColor,
-              //         child: const Icon(
-              //           Icons.add,
-              //           size: 30,
-              //           color: whiteColor,
-              //         ),
-              //         onPressed: () {
-              //           context.push(AddMedicationPage(), true);
-              //         }),
-              //   ),
-              //   ),
-
-              //     ],
-              //   ),
-              // ),
             );
           },
         );

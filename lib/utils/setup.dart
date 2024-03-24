@@ -1,3 +1,4 @@
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,9 +9,11 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future setupDatabase() async{
   
+
   await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(url: dotenv.env["supabaseUrl"]!, anonKey: dotenv.env["supabaseAnonKey"]!);
+
 }
 
 Future setup() async {

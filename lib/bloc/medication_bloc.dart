@@ -110,11 +110,11 @@ class MedicationBloc extends Bloc<MedicationEvent, MedicationState> {
     emit(MedicationLoadingState());
     try{
       await DBService().updateCurrentState(medication: event.medication, newStatus: event.newStatus);
-      
       emit(MedicationStatusUpdateState(updatedMedication: await DBService().getUpdatedMedication(medication: event.medication)));
       await showMedication(ShowUserMedicationsEvent(), emit);
     }catch(e){
       emit(MedicationErrorState(msg: "حدث خطا أثناء تحديث الحالة"));
     }
   }
+
 }
