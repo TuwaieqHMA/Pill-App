@@ -6,7 +6,6 @@ import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/utils/setup.dart';
 import 'package:pill_app/widgets/redirect_widget.dart';
 
-//test
 // Import other BLoCs as needed
 
 void main() async {
