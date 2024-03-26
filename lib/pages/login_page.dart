@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
+import 'package:pill_app/pages/bottom_nav_bar_page.dart';
 import 'package:pill_app/pages/email_verify_page.dart';
 import 'package:pill_app/pages/signup_page.dart';
 import 'package:pill_app/utils/colors.dart';

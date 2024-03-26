@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.email.trim().isNotEmpty &&
         event.password.trim().isNotEmpty &&
         event.age.trim().isNotEmpty) {
-      if (int.parse(event.age) >= 7 && int.parse(event.age) < 105) {
+      if (int.parse(event.age) >= 7 && int.parse(event.age) <= 120) {
         try {
           await DBService().signUp(
               name: event.name,

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
+import 'package:pill_app/pages/bottom_nav_bar_page.dart';
 import 'package:pill_app/pages/start_page.dart';
 
 class RedirectWidget extends StatelessWidget {
