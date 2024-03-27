@@ -81,6 +81,7 @@ class AddMedicationPage extends StatelessWidget {
                       height16,
                       HeaderIconTextField(
                         controller: medicationNameController,
+                        maxLength: 15,
                         headerText: "اسم الدواء",
                         hintText: "اكتب...",
                         suffixIcon: SvgPicture.asset(

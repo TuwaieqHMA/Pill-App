@@ -33,7 +33,7 @@ class HomePageHeader extends StatelessWidget {
           ),
           Positioned(
             right: context.getWidth() * 0.03,
-            bottom: context.getHeight() * 0.14,
+            bottom: context.getHeight() * 0.16,
             child: const Text(
               "مرحباً ",
               style: TextStyle(
@@ -47,7 +47,7 @@ class HomePageHeader extends StatelessWidget {
             builder: (context, state) {
               return Positioned(
                 right: context.getWidth() * 0.07,
-                bottom: context.getHeight() * 0.09,
+                bottom: context.getHeight() * 0.11,
                 child: Text(
                   locator.currentUser.name.split(" ")[0],
                   style: const TextStyle(
@@ -83,23 +83,11 @@ class HomePageHeader extends StatelessWidget {
           //     ),
           //   ),
           // ),
-
-          Positioned(
-              top: context.getHeight() * 0.03,
-              left: context.getWidth() * 0.05,
-              child: IconButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(SignOutEvent());
-                  context.push(LoginPage(canGoBack: false), false);
-                },
-                icon: const Icon(
-                  Icons.logout_rounded,
-                  color: whiteColor,
-                ),
-              )),
+              
+          
               Positioned(
               top: context.getHeight() * 0.03,
-              left: context.getWidth() * 0.85,
+              right: context.getWidth() * 0.85,
               child: IconButton(
                 onPressed: () {
                   context.push(ProfilePage(), true);

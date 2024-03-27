@@ -127,7 +127,6 @@ extension Screen on BuildContext {
                     true);
                 context.read<MedicationBloc>().add(MedicationStatusUpdateEvent( medication: medication, newStatus: textStatus));
               } else {
-                print("preeseee");
 
                 context.read<MedicationBloc>().add(MedicationStatusUpdateEvent(
                     medication: medication, newStatus: textStatus));
