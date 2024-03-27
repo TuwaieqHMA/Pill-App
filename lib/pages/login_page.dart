@@ -50,76 +50,78 @@ class LoginPage extends StatelessWidget {
           if (state is AuthLoadingState){
             return const Center(child: CircularProgressIndicator(color: midGreenColor,),);
           }else {
-          return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SimplfiedHeaderTextField(
-                  controller: emailController,
-                  label: 'الإيميل',
-                ),
-                height24,
-                SimplfiedHeaderTextField(
-                  isObscured: true,
-                  controller: passwordController,
-                  label: 'كلمة المرور',
-                ),
-                TextButton(
-                    style: const ButtonStyle(
-                        padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                        overlayColor: MaterialStatePropertyAll(glassGreyColor)),
-                    onPressed: () {
-                      context.push(EmailVerifcationPage(), true);
-                    },
-                    child: const Text(
-                      "هل نسيت كلمة المرور؟",
-                      style: TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: tajwalFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    )),
-                height16,
-                Align(
-                    alignment: Alignment.center,
-                    child: BottomButton(
-                      onTap: (){
-                        bloc.add(LoginEvent(email: emailController.text, password: passwordController.text));
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SimplfiedHeaderTextField(
+                    controller: emailController,
+                    label: 'الإيميل',
+                  ),
+                  height24,
+                  SimplfiedHeaderTextField(
+                    isObscured: true,
+                    controller: passwordController,
+                    label: 'كلمة المرور',
+                  ),
+                  TextButton(
+                      style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                          overlayColor: MaterialStatePropertyAll(glassGreyColor)),
+                      onPressed: () {
+                        context.push(EmailVerifcationPage(), true);
                       },
-                      text: "تسجيل الدخول",
-                      fillColor: midGreenColor,
-                      borderSide: BorderSide.none,
-                      minSize: const Size(300, 60),
-                    )),
-                height8,
-                Align(
-                  alignment: Alignment.center,
-                  child: RichText(
-                      text: TextSpan(children: [
-                    const TextSpan(
-                      text: "لا يوجد لديك حساب؟ ",
-                      style: TextStyle(
-                          color: blackColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push(SignupPage(canGoBack: false), false);
+                      child: const Text(
+                        "هل نسيت كلمة المرور؟",
+                        style: TextStyle(
+                            color: deepGreenColor,
+                            fontFamily: tajwalFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  height16,
+                  Align(
+                      alignment: Alignment.center,
+                      child: BottomButton(
+                        onTap: (){
+                          bloc.add(LoginEvent(email: emailController.text, password: passwordController.text));
                         },
-                      text: "سجل الآن",
-                      style: const TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ])),
-                )
-              ],
+                        text: "تسجيل الدخول",
+                        fillColor: midGreenColor,
+                        borderSide: BorderSide.none,
+                        minSize: const Size(300, 60),
+                      )),
+                  height8,
+                  Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                        text: TextSpan(children: [
+                      const TextSpan(
+                        text: "لا يوجد لديك حساب؟ ",
+                        style: TextStyle(
+                            color: blackColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.push(SignupPage(canGoBack: false), false);
+                          },
+                        text: "سجل الآن",
+                        style: const TextStyle(
+                            color: deepGreenColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ])),
+                  )
+                ],
+              ),
             ),
           );
           }
