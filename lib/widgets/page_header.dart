@@ -57,7 +57,7 @@ class PageHeader extends StatelessWidget {
               Positioned(
                   top: context.getHeight() * 0.03,
                   left: context.getWidth() * 0.05,
-                  child: IconButton(
+                  child:IconButton(
                     onPressed: () {
                       context.read<AuthBloc>().add(SignOutEvent());
                       context.push(LoginPage(canGoBack: false), false);
@@ -66,7 +66,8 @@ class PageHeader extends StatelessWidget {
                       Icons.logout_rounded,
                       color: whiteColor,
                     ),
-                  )),
+                  ) 
+                  ),
             ],
           ),
           (showLogo!)
