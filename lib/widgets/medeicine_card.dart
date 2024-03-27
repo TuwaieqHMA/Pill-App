@@ -55,7 +55,6 @@ class MedicineCard extends StatelessWidget {
 
             )),
         Container(
-          // margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           width: context.getWidth() * 0.8,
           height: context.getWidth() * 0.2,
@@ -80,14 +79,12 @@ class MedicineCard extends StatelessWidget {
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                            //  width8,
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       medication.currentStatus,
-                                      // " تم أخذ الدواء ",
                                       style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
