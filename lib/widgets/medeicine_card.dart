@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:pill_app/bloc/medication_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/models/medication_model.dart';
@@ -34,6 +37,10 @@ class MedicineCard extends StatelessWidget {
       default:
         color = Colors.transparent;
     }
+    print(medication.timeEat!.hour);
+    print(medication.timeEat!.minute);
+        print("${medication.timeEat!.hour}:${medication.timeEat!.minute.toString()}");
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -107,6 +114,24 @@ class MedicineCard extends StatelessWidget {
                                   });
                             },
                           ),
+                          width8,
+                        //////// TODO UI ////////
+              //             StatusCardButton(
+              //               color: goldColor,
+              //               icon: Icons.usb_rounded,
+              //               onPressed: () {
+              //                 showDialog(context: context, builder:(context) {
+              //                   return TimerFrame(
+              //   inverted: true,
+              //   description: 'الوقت  المتبقي للدواء',
+              //   timer: TimerBasic(hour:(medication.timeEat!.hour-TimeOfDay.now().hour),minute:(medication.timeEat!.minute-TimeOfDay.now().minute),
+              //     format: CountDownTimerFormat.hoursMinutes,
+              //     inverted: true,
+              //   ),
+              // );
+              //                 },);
+              //               }
+              //             ),
                           width8,
                           StatusCardButton(
                             color: goldColor,
@@ -214,7 +239,7 @@ class MedicineCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontFamily: poppinsFont,
                             color: greyColor),
-                      ),
+                      ), 
                     ],
                   ),
                 ],

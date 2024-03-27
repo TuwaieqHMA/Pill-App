@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/test_pages/chat_page.dart';
+import 'package:pill_app/pages/chat_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/widgets/container_saed.dart';
