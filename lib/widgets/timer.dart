@@ -17,7 +17,7 @@ class TimerBasic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TimerCountdown(
+    return TimerCountdown(enableDescriptions: false,
       format: format,
       endTime: DateTime.now().add(
         Duration(
@@ -34,7 +34,7 @@ class TimerBasic extends StatelessWidget {
         color: (inverted) ? purple : CupertinoColors.white,
         fontWeight: FontWeight.w300,
         fontSize: 14,
-        fontFeatures: <FontFeature>[
+        fontFeatures: const <FontFeature>[
           FontFeature.tabularFigures(),
         ],
       ),
@@ -42,7 +42,7 @@ class TimerBasic extends StatelessWidget {
         color: (inverted) ? purple : CupertinoColors.white,
         fontWeight: FontWeight.w300,
         fontSize: 12,
-        fontFeatures: <FontFeature>[
+        fontFeatures: const <FontFeature>[
           FontFeature.tabularFigures(),
         ],
       ),
