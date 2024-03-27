@@ -8,6 +8,8 @@ import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
 import 'package:pill_app/widgets/statuse_card_button.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:pill_app/widgets/timer.dart';
 
 class MedicineCard extends StatelessWidget {
   const MedicineCard(
@@ -34,197 +36,292 @@ class MedicineCard extends StatelessWidget {
       default:
         color = Colors.transparent;
     }
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      width: context.getWidth() * 0.8,
-      height: context.getWidth() * 0.2,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: glassGreyColor,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          fromHome
-              ? BlocConsumer<MedicationBloc, MedicationState>(
-                  listener: (context, state) {
-                    if (state is MedicationStatusUpdateState) {
-                      context.showSuccessSnackBar("تم تحديث حالة الدواء بنجاح");
-                    }
-                  },
-                  builder: (context, state) {
-                    if (medication.currentStatus != "لم يتم" ||
-                        state is MedicationStatusUpdateState) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          width16,
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  medication.currentStatus,
-                                  // " تم أخذ الدواء ",
-                                  style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: poppinsFont,
-                                      color: greyColor1),
-                                ),
-                              ]),
-                          width8,
-                          Container(
-                            padding: const EdgeInsets.only(top: 15),
-                            width: context.getWidth() * 0.02,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: color),
-                            child: const Text(""),
-                          ),
-                        ],
-                      );
-                    } else if (medication.currentStatus == "لم يتم") {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          StatusCardButton(
-                            color: redColor,
-                            icon: Icons.cancel_outlined,
-                            onPressed: () {
-                              context.showStatusDialog(
-                                  title: "تاكيد تخطي الدواء",
-                                  dialogContent:
-                                      "هل أنت متأكد من تخطي هذا الدواء ؟",
-                                  action1: "تخطي",
-                                  textStatus: "تم التخطي",
-                                  medication: medication,
-                                  onTap: () {
-                                    medicationBloc.add(
-                                        MedicationStatusUpdateEvent(
-                                            medication: medication,
-                                            newStatus: "تم التخطي"));
-                                  });
-                            },
-                          ),
-                          width8,
-                          StatusCardButton(
-                            color: goldColor,
-                            icon: Icons.timer_outlined,
-                            onPressed: () {
-                              context.showStatusDialog(
-                                title: "تاكيد إعادة جدولة الدواء",
-                                dialogContent:
-                                    "هل أنت متأكد من رغبتك في أعادة جدولة هذا الدواء ؟",
-                                textStatus: "إعادة جدولة",
-                                action1: "إعادة جدولة",
-                                medication: medication,
-                              );
-                            },
-                          ),
-                          width8,
-                          StatusCardButton(
-                            color: calmGreenColor,
-                            icon: Icons.done_outlined,
-                            onPressed: () {
-                              context.showStatusDialog(
-                                  title: "تاكيد أخذ الدواء",
-                                  dialogContent:
-                                      " هل أنت متأكد من أخذ الجرعة ؟",
-                                  action1: "تأكيد",
-                                  textStatus: "تم أخذ الجرعة",
-                                  medication: medication,
-                                  onTap: () {
-                                    medicationBloc.add(
-                                        MedicationStatusUpdateEvent(
-                                            medication: medication,
-                                            newStatus: "تم أخذ الجرعة"));
-                                  });
-                            },
-                          ),
-                        ],
-                      );
-                    }
-                    return const Text('أنا أحاول فيه');
-                  },
-                )
-              : InkWell(
-                  onTap: () {
-                    context.push(
-                        EditMedicationPage(
-                          medication: medication,
-                        ),
-                        true);
-                  },
-                  child: Image.asset("assets/icons/edit.png")),
-          Row(
+    return Column(
+      children: [
+        Container(
+            margin: const EdgeInsets.only(top: 8),
+            height: context.getHeight() * 0.03,
+            width: context.getWidth() * 0.4,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              color: calmGreenColor,
+            ),
+            child: Center(
+                child: TimerBasic(format: CountDownTimerFormat.hoursMinutes,
+              hour: (medication.timeEat!.hour - TimeOfDay.now().hour),
+              minute: (medication.timeEat!.minute - TimeOfDay.now().minute),
+            )
+
+            )),
+        Container(
+          // margin: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          width: context.getWidth() * 0.8,
+          height: context.getWidth() * 0.2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: glassGreyColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
+              fromHome
+                  ? BlocConsumer<MedicationBloc, MedicationState>(
+                      listener: (context, state) {
+                        if (state is MedicationStatusUpdateState) {
+                          context.showSuccessSnackBar(
+                              "تم تحديث حالة الدواء بنجاح");
+                        }
+                      },
+                      builder: (context, state) {
+                        if (medication.currentStatus != "لم يتم" ||
+                            state is MedicationStatusUpdateState) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                            //  width8,
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      medication.currentStatus,
+                                      // " تم أخذ الدواء ",
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: poppinsFont,
+                                          color: greyColor1),
+                                    ),
+                                  ]),
+                              width8,
+                              Container(
+                                padding: const EdgeInsets.only(top: 15),
+                                width: context.getWidth() * 0.02,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle, color: color),
+                                child: const Text(""),
+                              ),
+                            ],
+                          );
+                        } else if (medication.currentStatus == "لم يتم") {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                        elevation: 5,
+                                        child: Container(
+                                          padding: EdgeInsets.all(16.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "تأكيد العملية",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              height16,
+                                              Text(
+                                                "يرجى تأكيد الإجراء الذي ترغب في القيام به",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              height16,
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  StatusCardButton(
+                                                    color: redColor,
+                                                    icon: Icons.cancel_outlined,
+                                                    onPressed: () {
+                                                      
+                                                      context.showStatusDialog(
+                                                        title:
+                                                            "تأكيد تخطي الدواء",
+                                                        dialogContent:
+                                                            "هل أنت متأكد من تخطي هذا الدواء ؟",
+                                                        action1: "تخطي",
+                                                        textStatus: "تم التخطي",
+                                                        medication: medication,
+                                                        onTap: () {
+                                                          medicationBloc.add(
+                                                            MedicationStatusUpdateEvent(
+                                                              medication:
+                                                                  medication,
+                                                              newStatus:
+                                                                  "تم التخطي",
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                  width8,
+                                                  StatusCardButton(
+                                                    color: goldColor,
+                                                    icon: Icons.timer_outlined,
+                                                    onPressed: () {
+                                                       
+                                                      context.showStatusDialog(
+                                                        title:
+                                                            "تأكيد إعادة جدولة الدواء",
+                                                        dialogContent:
+                                                            "هل أنت متأكد من رغبتك في أعادة جدولة هذا الدواء ؟",
+                                                        textStatus:
+                                                            "إعادة جدولة",
+                                                        action1: "إعادة جدولة",
+                                                        medication: medication,
+                                                      );
+                                                    },
+                                                  ),
+                                                  width8,
+                                                  StatusCardButton(
+                                                    color: calmGreenColor,
+                                                    icon: Icons.done_outlined,
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      context.showStatusDialog(
+                                                        title:
+                                                            "تأكيد أخذ الدواء",
+                                                        dialogContent:
+                                                            " هل أنت متأكد من أخذ الجرعة ؟",
+                                                        action1: "تأكيد",
+                                                        textStatus:
+                                                            "تم أخذ الجرعة",
+                                                        medication: medication,
+                                                        onTap: () {
+                                                          medicationBloc.add(
+                                                            MedicationStatusUpdateEvent(
+                                                              medication:
+                                                                  medication,
+                                                              newStatus:
+                                                                  "تم أخذ الجرعة",
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(Icons.menu),
+                              ),
+                            ],
+                          );
+                        }
+                        return const Text('أنا أحاول فيه');
+                      },
+                    )
+                  : InkWell(
+                      onTap: () {
+                        context.push(
+                            EditMedicationPage(
+                              medication: medication,
+                            ),
+                            true);
+                      },
+                      child: Image.asset("assets/icons/edit.png")),
+              Row(
                 children: [
-                  Text(
-                    medication.medicationName,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: poppinsFont,
-                        color: blackColor),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      !fromHome
-                          ? Row(
-                              children: [
-                                Text(
-                                  medication.currentStatus != "لم يتم"
-                                      ? medication.currentStatus
-                                      : medication.beforeAfterEating,
-                                  style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: poppinsFont,
-                                      color: greyColor),
-                                ),
-                                width8,
-                                Container(
-                                  width: context.getWidth() * 0.008,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle, color: greyColor),
-                                  child: const Text(""),
-                                )
-                              ],
-                            )
-                          : const Text(""),
-                      width8,
-                      // ? // set morning or night
-                      Text(
-                        medication.timeEat!.period.name == "pm" ? "م " : "ص ",
-                        style: const TextStyle(
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 135),
+                        child: Text(
+                          medication.medicationName,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                             fontFamily: poppinsFont,
-                            color: greyColor),
+                            color: blackColor,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
-                      Text(
-                        "${medication.timeEat!.hourOfPeriod.toString()}:${medication.timeEat!.minute.toString()}",
-                        style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: poppinsFont,
-                            color: greyColor),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          !fromHome
+                              ? Row(
+                                  children: [
+                                    Text(
+                                      medication.currentStatus != "لم يتم"
+                                          ? medication.currentStatus
+                                          : medication.beforeAfterEating,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: poppinsFont,
+                                          color: greyColor),
+                                    ),
+                                    width8,
+                                    Container(
+                                      width: context.getWidth() * 0.008,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: greyColor),
+                                      child: const Text(""),
+                                    )
+                                  ],
+                                )
+                              : const Text(""),
+                          width8,
+                          // ? // set morning or night
+                          Text(
+                            medication.timeEat!.period.name == "pm"
+                                ? "م "
+                                : "ص ",
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: poppinsFont,
+                                color: greyColor),
+                          ),
+                          Text(
+                            "${medication.timeEat!.hourOfPeriod.toString()}:${medication.timeEat!.minute.toString()}",
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: poppinsFont,
+                                color: greyColor),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                  width8,
+                  Image.asset("assets/icons/pills_disabled.png"),
                 ],
               ),
-              width32,
-              Image.asset("assets/icons/pills_disabled.png"),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
