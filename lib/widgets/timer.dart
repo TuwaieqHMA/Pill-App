@@ -34,7 +34,7 @@ class TimerBasic extends StatelessWidget {
         color: (inverted) ? purple : CupertinoColors.white,
         fontWeight: FontWeight.w300,
         fontSize: 14,
-        fontFeatures: <FontFeature>[
+        fontFeatures: const <FontFeature>[
           FontFeature.tabularFigures(),
         ],
       ),
@@ -42,7 +42,7 @@ class TimerBasic extends StatelessWidget {
         color: (inverted) ? purple : CupertinoColors.white,
         fontWeight: FontWeight.w300,
         fontSize: 12,
-        fontFeatures: <FontFeature>[
+        fontFeatures: const <FontFeature>[
           FontFeature.tabularFigures(),
         ],
       ),
