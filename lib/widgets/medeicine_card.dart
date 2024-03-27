@@ -48,12 +48,21 @@ class MedicineCard extends StatelessWidget {
               color: calmGreenColor,
             ),
             child: Center(
-                child: TimerBasic(format: CountDownTimerFormat.hoursMinutes,
+                child: TimerBasic(
+              format: CountDownTimerFormat.hoursMinutesSeconds,
               hour: (medication.timeEat!.hour - TimeOfDay.now().hour),
               minute: (medication.timeEat!.minute - TimeOfDay.now().minute),
-            )
-
-            )),
+              onEnd: () {
+                if (medication.currentStatus != "تم التخطي") {
+                  medicationBloc.add(
+                    MedicationStatusUpdateEvent(
+                      medication: medication,
+                      newStatus: "تم التخطي",
+                    ),
+                  );
+                }
+              },
+            ))),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           width: context.getWidth() * 0.8,
@@ -146,7 +155,6 @@ class MedicineCard extends StatelessWidget {
                                                     color: redColor,
                                                     icon: Icons.cancel_outlined,
                                                     onPressed: () {
-                                                      
                                                       context.showStatusDialog(
                                                         title:
                                                             "تأكيد تخطي الدواء",
@@ -173,7 +181,6 @@ class MedicineCard extends StatelessWidget {
                                                     color: goldColor,
                                                     icon: Icons.timer_outlined,
                                                     onPressed: () {
-                                                       
                                                       context.showStatusDialog(
                                                         title:
                                                             "تأكيد إعادة جدولة الدواء",
@@ -247,7 +254,7 @@ class MedicineCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        constraints: BoxConstraints(maxWidth: 135),
+                        constraints: BoxConstraints(maxWidth: 130),
                         child: Text(
                           medication.medicationName,
                           style: const TextStyle(

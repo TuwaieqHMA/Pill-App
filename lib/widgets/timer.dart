@@ -1,35 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+
 class TimerBasic extends StatelessWidget {
   final CountDownTimerFormat format;
   final bool inverted;
   final int hour;
   final int minute;
+  Function()? onEnd;
 
   TimerBasic({
     required this.format,
     required this.hour,
     required this.minute,
     this.inverted = false,
+    this.onEnd,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TimerCountdown(
+      enableDescriptions: false,
       format: format,
       endTime: DateTime.now().add(
         Duration(
-
           hours: hour,
           minutes: minute,
-
         ),
       ),
-      onEnd: () {
-        print("Timer finished");
-      },
+      onEnd: onEnd,
       timeTextStyle: TextStyle(
         color: (inverted) ? purple : CupertinoColors.white,
         fontWeight: FontWeight.w300,
@@ -46,9 +46,8 @@ class TimerBasic extends StatelessWidget {
           FontFeature.tabularFigures(),
         ],
       ),
-          );
+    );
   }
 }
-      
-const Color purple = Color.fromARGB(255, 63, 45, 149);
 
+const Color purple = Color.fromARGB(255, 63, 45, 149);
