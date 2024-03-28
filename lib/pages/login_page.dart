@@ -27,7 +27,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<AuthBloc>();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
           preferredSize: Size(context.getWidth(), 370),
           child: PageHeader(

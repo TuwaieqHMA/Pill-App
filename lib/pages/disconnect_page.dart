@@ -16,7 +16,7 @@ class Disconnect extends StatelessWidget {
             children: [
               Image.asset("assets/images/offline-concept-illustration_114360-7063.jpg"),
               height16,
-              Text(
+              const Text(
                 'No internet connection',
                 style: TextStyle(fontSize: 30, color: deepGreenColor),
               ),
