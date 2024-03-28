@@ -23,6 +23,8 @@ class HomeData {
   ];
 
   int selectedPage = 0;
+bool isInitializeSupabase=false;
+bool isInitializeFierbase=false;
 
 
   String currentUserId = "";

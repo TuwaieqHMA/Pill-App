@@ -13,6 +13,7 @@ Future setupDatabase() async{
   await dotenv.load(fileName: ".env");
 
   await Supabase.initialize(url: dotenv.env["supabaseUrl"]!, anonKey: dotenv.env["supabaseAnonKey"]!);
+  GetIt.I.get<HomeData>().isInitializeSupabase=true;
 
 }
 
@@ -26,4 +27,5 @@ Future setupFireBase() async{
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
+GetIt.I.get<HomeData>().isInitializeFierbase=true;
 }
