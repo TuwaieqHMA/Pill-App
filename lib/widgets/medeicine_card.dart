@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
 import 'package:pill_app/utils/spaces.dart';
 import 'package:pill_app/widgets/statuse_card_button.dart';
-import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:pill_app/widgets/timer.dart';
 
 class MedicineCard extends StatelessWidget {
