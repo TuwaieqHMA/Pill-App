@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
+import 'package:pill_app/helpers/extensions/screen_helper.dart';
 import 'package:pill_app/pages/chat_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
@@ -10,7 +11,7 @@ import 'package:pill_app/widgets/container_saed.dart';
 import 'package:pill_app/widgets/texet_saed.dart';
 
 class AskSaedPage extends StatelessWidget {
-  const AskSaedPage({Key? key}) : super(key: key);
+  const AskSaedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,9 @@ class AskSaedPage extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              const ContainerSaed1(),
-              const ContainerSaed3(),
-              const ContainerSaed2(),
+              const Center(child: ContainerSaed1()),
+              const Center(child: ContainerSaed3()),
+              const Center(child: ContainerSaed2()),
               Positioned(
                 top: screenHeight * 0.18,
                 right: screenWidth * 0.13,
@@ -64,30 +65,32 @@ class AskSaedPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: screenHeight * 0.25,
-                right: screenWidth * 0.25,
-                child: Image.asset(
-                  'assets/images/saed_logo.png',
-                  height: screenHeight * 0.24,
-                  width: screenHeight * 0.24,
-                ),
-              ),
-              Positioned(
-                top: screenHeight * 0.48,
-                right: screenWidth * 0.55,
-                child: Image.asset(
-                  'assets/images/hand.png',
-                  height: screenHeight * 0.07,
-                  width: screenHeight * 0.07,
-                ),
-              ),
-              Positioned(
-                  top: screenHeight * 0.48,
-                right: screenWidth * 0.33,
-                child: TextSaed(
-                  text: 'ساعد',
-                  size: screenHeight * 0.05,
+              Center(
+                child: SizedBox(
+                  width: context.getWidth(),
+                  height: context.getHeight() * .31,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/saed_logo.png',
+                        height: screenHeight * 0.24,
+                        width: screenHeight * 0.24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/hand.png',
+                            height: screenHeight * 0.07,
+                            width: screenHeight * 0.07,
+                          ),
+                          const TextSaed(
+                            text: 'ساعد',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -99,7 +102,7 @@ class AskSaedPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                 bottom: screenHeight * 0.16,
+                bottom: screenHeight * 0.16,
                 right: screenWidth * 0.24,
                 child: TextSaed(
                   text: 'كيف يمكنني مساعدتك؟',
@@ -124,7 +127,7 @@ class AskSaedPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                     bottom: screenHeight * 0.040,
+                bottom: screenHeight * 0.040,
                 right: screenWidth * 0.42,
                 child: TextSaed(
                   text: 'انقر للتحدث',

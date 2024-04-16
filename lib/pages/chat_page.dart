@@ -79,7 +79,7 @@ final translator = GoogleTranslator();
                       borderRadius: BorderRadius.circular(40),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10,right: 10),
-                        child: Image.network(
+                        child: Image.asset(
                           p0.profileImage!,
                           width: 60,
                           height: 60,

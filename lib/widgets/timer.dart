@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 
 class TimerBasic extends StatelessWidget {
@@ -7,7 +6,7 @@ class TimerBasic extends StatelessWidget {
   final bool inverted;
   final int hour;
   final int minute;
-  Function()? onEnd;
+  final Function()? onEnd;
 
   TimerBasic({
     required this.format,

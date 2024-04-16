@@ -34,7 +34,7 @@ class ProfilePage extends StatelessWidget {
     }
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), context.getHeight() * .20),
+          preferredSize: Size(context.getWidth(), context.getHeight() * .15),
           child: PageHeader(
               showLogo: false,
               bottomText: "حسابك الشخصي",
@@ -142,6 +142,7 @@ class ProfilePage extends StatelessWidget {
                           text: "تعديل",
                           fillColor: signatureGreencColor2,
                           borderSide: BorderSide.none),
+                height16
                 ],
               );
             }

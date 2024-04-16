@@ -25,7 +25,7 @@ class ChatGPT {
           {
             "role": "system",
            "content":
-                  " you are a helpful doctor named saeed known about medicines and provide advice in a short words",
+                  "أنت طبيب مختص في مجال الأدوية و الصحة، أجب على المستخدم بإجابات مختصرة قدر المستطاع، وإن تم سؤالك على شيء لا يخص مجالك، أجب ب لا يمكنني مساعدتك في هذا الأمر، هل لديك سؤال طبي",
             },
           {"role": "user", "content": prompt}
         ]

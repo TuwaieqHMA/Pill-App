@@ -75,11 +75,11 @@ bool isInitializeFierbase=false;
   ChatUser user = ChatUser(
       id: "1",
       profileImage:
-          "https://s3-alpha-sig.figma.com/img/e5e0/c9e3/10cab5574ab7b4b2f88e19f8ace08576?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Abvv9l23w5TiYgwejTzYud~j99ncIW53RkU3qKnkHGpRtuRnBUT2ENMpr5A6cJVcwAlhd5I-033eaAmRw5klYYNftwjuYIp7QWYe97~2q3A56g8WO-HVcrjuFIeH0ZZUXDQcs46oR4klkFErMXHD9~CHhGJCrCkz44ALxBV1pNLCPDk-FMfkyXjC14QDLSJBuquYMVbSjx9mpfNR6PPYXtvtZNsz3z9uCd1e98lFewr3mV~OOcPRVQy2IYjTQVGqB58qzHphJFZQiowaSFPdDWYgzNiN6Rnl6J9EpFj6gIvzVqqvBCEEt9UcJO9S2iS8FYPPJSqcKYo4n3rAvAwEcQ__");
+          "assets/images/saed_logo.png");
   ChatUser bot = ChatUser(
       id: "2",
       profileImage:
-          "https://s3-alpha-sig.figma.com/img/eeea/025c/739e87fafc30dfb63f52a1a19898bc45?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZBU3Map7sK4G4X0xxOXTqyerVtH2FN9EBaB5Q2B4NMJXvHClFJE2p~iu9-rhBB1eJBgVD00XcG71oGILkTXi3LVxNVPJuKN0XE8CQKWv3aOJ2NfNjfBGLgzqNIpc8EWgBLWI3VDcLYdGb3pr78UIOoFftnlQmtjINx131VvaliFet40wtqODcG1JDCRN0lETjoM2lKjdA47LkAGWifyAJNHX92RWUo28mHSbA83eBFNxl7bTCASn3vv1XD3r1TuU9OIjsnPesFrfIXn~VMypbkZ8D9eQEHYtI1Ptw9GhE9h333Bv-u28Jjx~GFSFa3xbJHFqUuPXT8jUipPXWkxTVg__");
+          "assets/images/chat_user.png");
 
   HomeData() {
     loadChatLog();
