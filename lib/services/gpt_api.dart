@@ -11,6 +11,7 @@ class ChatGPT {
     final uri = Uri.parse(chatUrl);
     String answer = "";
 
+    // ignore: unused_local_variable
     final req = await http.post(
       uri,
       headers: {
@@ -24,15 +25,16 @@ class ChatGPT {
           {
             "role": "system",
            "content":
-                  " انت صيدلاني واسمك ساعد اجب على اي شيء يخص الادويه و الوصفات الدوائيه و الصحه اذا سألت عن اسئله تحتاج استشارة طبيب اخبرهم بأن يستشيرو الطبيب ارهم بعض الصور اذا تطلب الامر",
+                  "أنت طبيب مختص في مجال الأدوية و الصحة، أجب على المستخدم بإجابات مختصرة قدر المستطاع، وإن تم سؤالك على شيء لا يخص مجالك، أجب ب لا يمكنني مساعدتك في هذا الأمر، هل لديك سؤال طبي",
             },
           {"role": "user", "content": prompt}
         ]
       }),
-    );
-    final response = json.decode(req.body);
-    print(response);
-    answer = response["choices"][0]["message"]["content"];
+     )
+        .then((value) {
+      final response = jsonDecode(utf8.decode(value.bodyBytes) );
+      answer = response["choices"][0]["message"]["content"];
+    });
     return answer;
   }
 

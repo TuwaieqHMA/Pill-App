@@ -5,7 +5,16 @@ import 'package:pill_app/utils/spaces.dart';
 
 class HeaderIconTextField extends StatelessWidget {
   const HeaderIconTextField({
-    super.key, required this.headerText, required this.hintText, this.suffixIcon, this.controller, this.isreadOnly, this.prefixIcon, this.textDirection, this.onTap,
+    super.key,
+    required this.headerText,
+    required this.hintText,
+    this.suffixIcon,
+    this.controller,
+    this.isreadOnly,
+    this.prefixIcon,
+    this.textDirection,
+    this.onTap,
+    this.maxLength, 
   });
 
   final String headerText;
@@ -16,6 +25,7 @@ class HeaderIconTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isreadOnly;
   final Function()? onTap;
+  final int? maxLength; 
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +35,11 @@ class HeaderIconTextField extends StatelessWidget {
         Text(
           headerText,
           style: const TextStyle(
-              color: blackColor,
-              fontFamily: poppinsFont,
-              fontSize: 15,
-              fontWeight: FontWeight.w500),
+            color: blackColor,
+            fontFamily: poppinsFont,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         height8,
         TextField(
@@ -37,27 +48,39 @@ class HeaderIconTextField extends StatelessWidget {
           controller: controller,
           textDirection: textDirection ?? TextDirection.rtl,
           cursorColor: greyColor,
+          maxLength: maxLength, // Apply maxLength to the TextField
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: const TextStyle(color: greyTextColor, fontFamily: poppinsFont, fontSize: 15, fontWeight: FontWeight.w500),
+            hintStyle: const TextStyle(
+              color: greyTextColor,
+              fontFamily: poppinsFont,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
             hintTextDirection: textDirection ?? TextDirection.rtl,
-              fillColor: glassGreyColor,
-              filled: true,
-              suffixIcon: (suffixIcon != null) ? Container(
-                width: 16,
-                height: 16,
-                alignment: Alignment.center,
-                child: suffixIcon
-              ) : null,
-              prefixIcon: (prefixIcon != null) ?Container(
-                width: 16,
-                height: 16,
-                alignment: Alignment.center,
-                child: prefixIcon
-              ) : null,
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none)),
+            fillColor: glassGreyColor,
+            filled: true,
+            suffixIcon: (suffixIcon != null)
+                ? Container(
+                    width: 16,
+                    height: 16,
+                    alignment: Alignment.center,
+                    child: suffixIcon,
+                  )
+                : null,
+            prefixIcon: (prefixIcon != null)
+                ? Container(
+                    width: 16,
+                    height: 16,
+                    alignment: Alignment.center,
+                    child: prefixIcon,
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide.none,
+            ),
+          ),
         )
       ],
     );

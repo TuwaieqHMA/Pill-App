@@ -23,10 +23,10 @@ class ResetPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), context.getHeight() * .14,),
+          preferredSize: Size(context.getWidth(), context.getHeight() * .20,),
           child: PageHeader(
             bottomText: "تغيير كلمة المرور",
-            height: context.getHeight() * .14,
+            height: context.getHeight() * .20,
             canGoBack: true,
             showLogo: false,
             bottomTextAlignment: Alignment.center,

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/data_layer/home_data_layer.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/login_page.dart';
 import 'package:pill_app/pages/profile_page.dart';
 import 'package:pill_app/utils/colors.dart';
 import 'package:pill_app/utils/fonts.dart';
@@ -33,7 +32,7 @@ class HomePageHeader extends StatelessWidget {
           ),
           Positioned(
             right: context.getWidth() * 0.03,
-            bottom: context.getHeight() * 0.14,
+            bottom: context.getHeight() * 0.16,
             child: const Text(
               "مرحباً ",
               style: TextStyle(
@@ -47,7 +46,7 @@ class HomePageHeader extends StatelessWidget {
             builder: (context, state) {
               return Positioned(
                 right: context.getWidth() * 0.07,
-                bottom: context.getHeight() * 0.09,
+                bottom: context.getHeight() * 0.11,
                 child: Text(
                   locator.currentUser.name.split(" ")[0],
                   style: const TextStyle(
@@ -59,47 +58,11 @@ class HomePageHeader extends StatelessWidget {
               );
             },
           ),
-          //  log out
-          // Positioned(
-          //   top: context.getHeight() * 0.04,
-          //   right: context.getWidth() * 0.07,
-          //   child: InkWell(
-          //     onTap: () {
-          //       // TODO log out
-          //     },
-          //     child: const Row(
-          //       children: [
-          //         Text(
-          //           "تسجيل الخروج",
-          //           style: TextStyle(
-          //               color: whiteColor,
-          //               fontSize: 13,
-          //               fontFamily: poppinsFont,
-          //               fontWeight: FontWeight.w500),
-          //         ),
-          //         width8,
-          //         Icon(Icons.login_outlined, color: whiteColor),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-
-          Positioned(
-              top: context.getHeight() * 0.03,
-              left: context.getWidth() * 0.05,
-              child: IconButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(SignOutEvent());
-                  context.push(LoginPage(canGoBack: false), false);
-                },
-                icon: const Icon(
-                  Icons.logout_rounded,
-                  color: whiteColor,
-                ),
-              )),
+    
+          
               Positioned(
               top: context.getHeight() * 0.03,
-              left: context.getWidth() * 0.85,
+              right: context.getWidth() * 0.85,
               child: IconButton(
                 onPressed: () {
                   context.push(ProfilePage(), true);

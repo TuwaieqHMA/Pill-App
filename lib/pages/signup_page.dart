@@ -28,13 +28,12 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<AuthBloc>();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-          preferredSize: Size(context.getWidth(), context.getHeight() * .14),
+          preferredSize: Size(context.getWidth(), context.getHeight() * .20),
           child: PageHeader(
             canGoBack: canGoBack,
             showLogo: false,
-            height: context.getHeight() * .14,
+            height: context.getHeight() * .20,
             bottomText: 'إنشاء الحساب',
           )),
       body: BlocConsumer<AuthBloc, AuthState>(
@@ -50,75 +49,77 @@ class SignupPage extends StatelessWidget {
           if (state is AuthLoadingState){
             return const Center(child: CircularProgressIndicator(color: midGreenColor,),);
           }else {
-          return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SimplfiedHeaderTextField(
-                  textDirection: TextDirection.rtl,
-                  controller: nameController,
-                  label: 'الاسم',
-                ),
-                height24,
-                SimplfiedHeaderTextField(
-                  maxLength: 3,
-                  textDirection: TextDirection.rtl,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  controller: ageController,
-                  label: 'العمر',
-                ),
-                height24,
-                SimplfiedHeaderTextField(
-                  controller: emailController,
-                  label: 'الإيميل',
-                ),
-                height24,
-                SimplfiedHeaderTextField(
-                  isObscured: true,
-                  controller: passwordController,
-                  label: 'كلمة المرور',
-                ),
-                height32,
-                Align(
-                    alignment: Alignment.center,
-                    child: BottomButton(
-                      onTap: (){
-                        bloc.add(SignUpEvent(age: ageController.text, email: emailController.text, password: passwordController.text, name: nameController.text));
-                      },
-                      text: "إنشاء الحساب",
-                      fillColor: midGreenColor,
-                      borderSide: BorderSide.none,
-                      minSize: const Size(300, 60),
-                    )),
-                height8,
-                Align(
-                  alignment: Alignment.center,
-                  child: RichText(
-                      text: TextSpan(children: [
-                    const TextSpan(
-                      text: "لديك حساب مسبقاً؟ ",
-                      style: TextStyle(
-                          color: blackColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push(LoginPage(canGoBack: false), false);
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SimplfiedHeaderTextField(
+                    textDirection: TextDirection.rtl,
+                    controller: nameController,
+                    label: 'الاسم',
+                  ),
+                  height24,
+                  SimplfiedHeaderTextField(
+                    maxLength: 3,
+                    textDirection: TextDirection.rtl,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    controller: ageController,
+                    label: 'العمر',
+                  ),
+                  height24,
+                  SimplfiedHeaderTextField(
+                    controller: emailController,
+                    label: 'الإيميل',
+                  ),
+                  height24,
+                  SimplfiedHeaderTextField(
+                    isObscured: true,
+                    controller: passwordController,
+                    label: 'كلمة المرور',
+                  ),
+                  height32,
+                  Align(
+                      alignment: Alignment.center,
+                      child: BottomButton(
+                        onTap: (){
+                          bloc.add(SignUpEvent(age: ageController.text, email: emailController.text, password: passwordController.text, name: nameController.text));
                         },
-                      text: "تسجيل الدخول",
-                      style: const TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ])),
-                )
-              ],
+                        text: "إنشاء الحساب",
+                        fillColor: midGreenColor,
+                        borderSide: BorderSide.none,
+                        minSize: const Size(300, 60),
+                      )),
+                  height8,
+                  Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                        text: TextSpan(children: [
+                      const TextSpan(
+                        text: "لديك حساب مسبقاً؟ ",
+                        style: TextStyle(
+                            color: blackColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.push(LoginPage(canGoBack: false), false);
+                          },
+                        text: "تسجيل الدخول",
+                        style: const TextStyle(
+                            color: deepGreenColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ])),
+                  )
+                ],
+              ),
             ),
           );
           }

@@ -142,6 +142,7 @@ class ProfilePage extends StatelessWidget {
                           text: "تعديل",
                           fillColor: signatureGreencColor2,
                           borderSide: BorderSide.none),
+                height16
                 ],
               );
             }

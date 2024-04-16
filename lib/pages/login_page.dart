@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pill_app/bloc/auth_bloc.dart';
 import 'package:pill_app/helpers/extensions/screen_helper.dart';
-import 'package:pill_app/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
+import 'package:pill_app/pages/bottom_nav_bar_page.dart';
 import 'package:pill_app/pages/email_verify_page.dart';
 import 'package:pill_app/pages/signup_page.dart';
 import 'package:pill_app/utils/colors.dart';
@@ -27,7 +27,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<AuthBloc>();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
           preferredSize: Size(context.getWidth(), 370),
           child: PageHeader(
@@ -50,76 +49,78 @@ class LoginPage extends StatelessWidget {
           if (state is AuthLoadingState){
             return const Center(child: CircularProgressIndicator(color: midGreenColor,),);
           }else {
-          return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SimplfiedHeaderTextField(
-                  controller: emailController,
-                  label: 'الإيميل',
-                ),
-                height24,
-                SimplfiedHeaderTextField(
-                  isObscured: true,
-                  controller: passwordController,
-                  label: 'كلمة المرور',
-                ),
-                TextButton(
-                    style: const ButtonStyle(
-                        padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                        overlayColor: MaterialStatePropertyAll(glassGreyColor)),
-                    onPressed: () {
-                      context.push(EmailVerifcationPage(), true);
-                    },
-                    child: const Text(
-                      "هل نسيت كلمة المرور؟",
-                      style: TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: tajwalFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    )),
-                height16,
-                Align(
-                    alignment: Alignment.center,
-                    child: BottomButton(
-                      onTap: (){
-                        bloc.add(LoginEvent(email: emailController.text, password: passwordController.text));
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SimplfiedHeaderTextField(
+                    controller: emailController,
+                    label: 'الإيميل',
+                  ),
+                  height24,
+                  SimplfiedHeaderTextField(
+                    isObscured: true,
+                    controller: passwordController,
+                    label: 'كلمة المرور',
+                  ),
+                  TextButton(
+                      style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                          overlayColor: MaterialStatePropertyAll(glassGreyColor)),
+                      onPressed: () {
+                        context.push(EmailVerifcationPage(), true);
                       },
-                      text: "تسجيل الدخول",
-                      fillColor: midGreenColor,
-                      borderSide: BorderSide.none,
-                      minSize: const Size(300, 60),
-                    )),
-                height8,
-                Align(
-                  alignment: Alignment.center,
-                  child: RichText(
-                      text: TextSpan(children: [
-                    const TextSpan(
-                      text: "لا يوجد لديك حساب؟ ",
-                      style: TextStyle(
-                          color: blackColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.push(SignupPage(canGoBack: false), false);
+                      child: const Text(
+                        "هل نسيت كلمة المرور؟",
+                        style: TextStyle(
+                            color: deepGreenColor,
+                            fontFamily: tajwalFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  height16,
+                  Align(
+                      alignment: Alignment.center,
+                      child: BottomButton(
+                        onTap: (){
+                          bloc.add(LoginEvent(email: emailController.text, password: passwordController.text));
                         },
-                      text: "سجل الآن",
-                      style: const TextStyle(
-                          color: deepGreenColor,
-                          fontFamily: poppinsFont,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ])),
-                )
-              ],
+                        text: "تسجيل الدخول",
+                        fillColor: midGreenColor,
+                        borderSide: BorderSide.none,
+                        minSize: const Size(300, 60),
+                      )),
+                  height8,
+                  Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                        text: TextSpan(children: [
+                      const TextSpan(
+                        text: "لا يوجد لديك حساب؟ ",
+                        style: TextStyle(
+                            color: blackColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.push(SignupPage(canGoBack: false), false);
+                          },
+                        text: "سجل الآن",
+                        style: const TextStyle(
+                            color: deepGreenColor,
+                            fontFamily: poppinsFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ])),
+                  )
+                ],
+              ),
             ),
           );
           }
