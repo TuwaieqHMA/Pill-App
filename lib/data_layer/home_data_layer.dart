@@ -75,13 +75,14 @@ bool isInitializeFierbase=false;
   ChatUser user = ChatUser(
       id: "1",
       profileImage:
-          "assets/images/saed_logo.png");
+          "assets/images/chat_user.png");
   ChatUser bot = ChatUser(
       id: "2",
       profileImage:
-          "assets/images/chat_user.png");
+          "assets/images/saed_logo.png");
 
   HomeData() {
+    box.erase();
     loadChatLog();
   }
   void saveChatLog() async{

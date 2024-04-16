@@ -43,7 +43,7 @@ class MedicineCard extends StatelessWidget {
             margin: const EdgeInsets.only(top: 8),
             height: context.getHeight() * 0.03,
             width: context.getWidth() * 0.4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               color: calmGreenColor,
@@ -128,11 +128,11 @@ class MedicineCard extends StatelessWidget {
                                         ),
                                         elevation: 5,
                                         child: Container(
-                                          padding: EdgeInsets.all(16.0),
+                                          padding: const EdgeInsets.all(16.0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "تأكيد العملية",
                                                 style: TextStyle(
                                                   fontSize: 20,
@@ -140,7 +140,7 @@ class MedicineCard extends StatelessWidget {
                                                 ),
                                               ),
                                               height16,
-                                              Text(
+                                              const Text(
                                                 "يرجى تأكيد الإجراء الذي ترغب في القيام به",
                                                 style: TextStyle(
                                                   fontSize: 16,
@@ -156,6 +156,7 @@ class MedicineCard extends StatelessWidget {
                                                     color: redColor,
                                                     icon: Icons.cancel_outlined,
                                                     onPressed: () {
+                                                      Navigator.pop(context);
                                                       context.showStatusDialog(
                                                         title:
                                                             "تأكيد تخطي الدواء",
@@ -182,6 +183,7 @@ class MedicineCard extends StatelessWidget {
                                                     color: goldColor,
                                                     icon: Icons.timer_outlined,
                                                     onPressed: () {
+                                                      Navigator.pop(context);
                                                       context.showStatusDialog(
                                                         title:
                                                             "تأكيد إعادة جدولة الدواء",
@@ -231,7 +233,7 @@ class MedicineCard extends StatelessWidget {
                                     },
                                   );
                                 },
-                                child: Icon(Icons.menu),
+                                child: const Icon(Icons.menu),
                               ),
                             ],
                           );
@@ -255,7 +257,7 @@ class MedicineCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        constraints: BoxConstraints(maxWidth: 130),
+                        constraints: const BoxConstraints(maxWidth: 130),
                         child: Text(
                           medication.medicationName,
                           style: const TextStyle(
